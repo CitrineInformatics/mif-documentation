@@ -54,7 +54,7 @@ api.kittens.get()
 
 ```shell
 curl --data "term=GaN&from=0&per_page=10"
- "http://your-site.citrination.com/api/samples/simple_search"
+ "http://your-site.citrination.com/api/measurements/search"
   -H "X-API-Key: your-api-key"
   -H "Content-Type: application/json"
 ```
@@ -66,7 +66,6 @@ curl --data "term=GaN&from=0&per_page=10"
   "results": [
     {
       "formula": "GaN",
-      "display_formula": null,
       "property_name": "Band gap",
       "conditions": [],
       "references": [
@@ -92,7 +91,6 @@ curl --data "term=GaN&from=0&per_page=10"
     },
     {
       "formula": "GaN",
-      "display_formula": null,
       "property_name": "Band gap",
       "conditions": [],
       "references": null,
@@ -116,12 +114,10 @@ curl --data "term=GaN&from=0&per_page=10"
 }
 ```
 
-This endpoint retrieves all kittens.
+This endpoint searches data based on text input to the term field. We index chemical formulas in a variety of ways, and the term field in this method is very flexible. For example, you could search "band gap of gallium nitride", or "ternary oxides" and get back a variety of interesting results, ranked according to our proprietary scoring algorithm.
 
 ### HTTP Request
-```
-POST http://your-site.citrination.com/api/samples/simple_search
-```
+`POST http://your-site.citrination.com/api/measurements/search`
 
 ### Query Parameters
 
@@ -141,18 +137,18 @@ per_page | false | If using pagination, sets how many records to return. Default
 Don't forget your API key!
 </aside>
 
-## Search a specific sample
+## Filter Data
 
 ```python
 import kittn
 
 api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+api.kittens.get()
 ```
 
 ```shell
-curl --data "term=GaN&from=0&per_page=10"
- "http://your-site.citrination.com/api/uploads/213/simple_search"
+curl --data "formula=GaN&from=0&per_page=10"
+ "http://your-site.citrination.com/api/samples/filter"
   -H "X-API-Key: your-api-key"
   -H "Content-Type: application/json"
 ```
@@ -164,7 +160,6 @@ curl --data "term=GaN&from=0&per_page=10"
   "results": [
     {
       "formula": "GaN",
-      "display_formula": null,
       "property_name": "Band gap",
       "conditions": [],
       "references": [
@@ -187,13 +182,107 @@ curl --data "term=GaN&from=0&per_page=10"
       "minimif_id": "129353",
       "mif_id": 213,
       "permalink": "/uploads/213/samples/gan-band-gap"
+    },
+    {
+      "formula": "GaN",
+      "property_name": "Band gap",
+      "conditions": [],
+      "references": null,
+      "display_contributor": "Dr. Materials",
+      "measurement": {
+        "name": "Band gap",
+        "units": "eV",
+        "type": "experimental",
+        "value_display": "3.4",
+        "print_value": "3.4 eV"
+      },
+      "plot_types": [],
+      "data_type": null,
+      "minimif_id": "129349",
+      "mif_id": 212,
+      "permalink": "/uploads/212/samples/gan-band-gap"
     }
   ],
   "time": 14,
   "hits": 2
 }
 ```
-This endpoint retrieves a specific kitten.
+
+Filtering is a bit like searching, but for when you want a limited set of exact matches of data instead of a "friendlier" term search. Filtering on "GaN", for example, will not return results like GaN2. The API is very similar, but there is no term field. Note that our samples index uses the same underlying data as our measurement index, but the return values are slightly different.
+
+### HTTP Request
+`POST http://your-site.citrination.com/api/samples/filter`
+
+### Query Parameters
+
+Parameter | Required | Description
+--------- | ------- | -----------
+formula | false | Limit the search results by the chemical formula entered here
+contributor | false | Limit the search results by the name of the person that contributed the data
+reference | false | Limit the search results by the original reference for the data
+min_measurement | false | Minimum decimal value for property value
+max_measurement | false | Maximum decimal value for property value
+from | false | If using pagination, set the starting record. Defaults to 0
+per_page | false | If using pagination, sets how many records to return. Defaults to 10
+
+
+<aside class="success">
+Don't forget your API key!
+</aside>
+
+## Search a specific data set  
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+api.kittens.get(2)
+```
+
+```shell
+curl --data "term=GaN&from=0&per_page=10"
+ "http://your-site.citrination.com/api/datasets/213/measurements/search"
+  -H "X-API-Key: your-api-key"
+  -H "Content-Type: application/json"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "results": [
+    {
+      "formula": "GaN",
+      "property_name": "Band gap",
+      "conditions": [],
+      "references": [
+        {
+          "citationFull": "Dr. Materials Band Gap Paper",
+          "citationShort": "Dr. Materials Band Gap Paper",
+          "url": null
+        }
+      ],
+      "display_contributor": "Dr. Materials",
+      "measurement": {
+        "name": "Band gap",
+        "units": "eV",
+        "type": "experimental",
+        "value_display": "3.4",
+        "print_value": "3.4 eV"
+      },
+      "plot_types": [],
+      "data_type": "experimental",
+      "minimif_id": "129353",
+      "mif_id": 213,
+      "permalink": "/uploads/213/samples/gan-band-gap"
+    }
+  ],
+  "time": 14,
+  "hits": 2
+}
+```
+This API is identical to the main search API, but limited to a particular dataset. You will notice that the search results include a "mif_id" field. This ID is the value to supply to the datasets endpoint when searching.
+
+This endpoint searches data based on text input to the term field. We index chemical formulas in a variety of ways, and the term field in this method is very flexible. For example, you could search "band gap of gallium nitride", or "ternary oxides" and get back a variety of interesting results, ranked according to our proprietary scoring algorithm.
 
 <aside class="warning">
 You can use a ? in the 'term' parameter to retrieve all structured data for a given sample.
@@ -201,9 +290,7 @@ You can use a ? in the 'term' parameter to retrieve all structured data for a gi
 
 ### HTTP Request
 
-```
-POST http://your-site.citrination.com/api/uploads/<id>/simple_search
-```
+`POST http://your-site.citrination.com/api/datasets/<id>/measurements/search`
 
 ### URL Parameters
 
@@ -216,6 +303,87 @@ ID | The ID of the sample to search
 Parameter | Required | Description
 --------- | ------- | -----------
 term | true | The basic search query
+formula | false | Limit the search results by the chemical formula entered here
+contributor | false | Limit the search results by the name of the person that contributed the data
+reference | false | Limit the search results by the original reference for the data
+min_measurement | false | Minimum decimal value for property value
+max_measurement | false | Maximum decimal value for property value
+from | false | If using pagination, set the starting record. Defaults to 0
+per_page | false | If using pagination, sets how many records to return. Defaults to 10
+
+
+<aside class="success">
+Don't forget your API key!
+</aside>
+
+## Filter a specific data set  
+```python
+import kittn
+
+api = kittn.authorize('meowmeowmeow')
+api.kittens.get(2)
+```
+
+```shell
+curl --data "formula=GaN&from=0&per_page=10"
+ "http://your-site.citrination.com/api/datasets/213/samples/filter"
+  -H "X-API-Key: your-api-key"
+  -H "Content-Type: application/json"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "results": [
+    {
+      "formula": "GaN",
+      "property_name": "Band gap",
+      "conditions": [],
+      "references": [
+        {
+          "citationFull": "Dr. Materials Band Gap Paper",
+          "citationShort": "Dr. Materials Band Gap Paper",
+          "url": null
+        }
+      ],
+      "display_contributor": "Dr. Materials",
+      "measurement": {
+        "name": "Band gap",
+        "units": "eV",
+        "type": "experimental",
+        "value_display": "3.4",
+        "print_value": "3.4 eV"
+      },
+      "plot_types": [],
+      "data_type": "experimental",
+      "minimif_id": "129353",
+      "mif_id": 213,
+      "permalink": "/uploads/213/samples/gan-band-gap"
+    }
+  ],
+  "time": 14,
+  "hits": 2
+}
+```
+This API is identical to the main filter API, but limited to a particular dataset. You will notice that the search results include a "mif_id" field. This ID is the value to supply to the datasets endpoint when searching.
+
+Filtering is a bit like searching, but for when you want a limited set of exact matches of data instead of a "friendlier" term search. Filtering on "GaN", for example, will not return results like GaN2. The API is very similar, but there is no term field. Note that our samples index uses the same underlying data as our measurement index, but the return values are slightly different..
+
+### HTTP Request
+
+`POST http://your-site.citrination.com/api/datasets/<id>/samples/filter`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the dataset to filter
+
+### Query Parameters
+
+Parameter | Required | Description
+--------- | ------- | -----------
 formula | false | Limit the search results by the chemical formula entered here
 contributor | false | Limit the search results by the name of the person that contributed the data
 reference | false | Limit the search results by the original reference for the data
