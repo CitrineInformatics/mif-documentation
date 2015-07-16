@@ -1,10 +1,8 @@
 ---
-title: API Reference
+title: Citrination API Reference
 
 language_tabs:
-  - ruby
   - python
-  - java
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -18,56 +16,35 @@ search: true
 
 # Introduction
 
-Welcome to the Citrine Informatics API Documentation! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Citrination API Documentation! The Citrination API can be used to query our extensive database of material properties in a couple of exciting ways.
 
 We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
-
 # Authentication
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+> To authenticate, you must obtain your API key from Citrine Informatics
 
 ```python
 import kittn
 
-api = kittn.authorize('meowmeowmeow')
+api = kittn.authorize('your-unique-api-key')
 ```
 
-```shell
-# With shell, you can just pass the correct header with each request
+```
+# Authentication tokens must be applied to the headers of any requests made to the Citrination API
 curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+  -H "X-API-Key: your-unique-api-key"
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+Citrination uses API keys to allow access to the API. You can register a new Kittn API key by logging in to your instance of Citrination, clicking on your username and selecting 'Account'.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Citrination expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+`X-API-Key: your-unique-api-key`
 
-`Authorization: meowmeowmeow`
+# Materials Data
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
+## Search Data
 
 ```python
 import kittn
@@ -84,36 +61,79 @@ curl "http://example.com/api/kittens"
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+{
+  "results": [
+    {
+      "formula": "GaN",
+      "display_formula": null,
+      "property_name": "Band gap",
+      "conditions": [],
+      "references": [
+        {
+          "citationFull": "Dr. Materials Band Gap Paper",
+          "citationShort": "Dr. Materials Band Gap Paper",
+          "url": null
+        }
+      ],
+      "display_contributor": "Dr. Materials",
+      "measurement": {
+        "name": "Band gap",
+        "units": "eV",
+        "type": "experimental",
+        "value_display": "3.4",
+        "print_value": "3.4 eV"
+      },
+      "plot_types": [],
+      "data_type": null,
+      "minimif_id": "129353",
+      "mif_id": 213,
+      "permalink": "/uploads/213/samples/gan-band-gap"
+    },
+    {
+      "formula": "GaN",
+      "display_formula": null,
+      "property_name": "Band gap",
+      "conditions": [],
+      "references": null,
+      "display_contributor": "Dr. Materials",
+      "measurement": {
+        "name": "Band gap",
+        "units": "eV",
+        "type": "experimental",
+        "value_display": "3.4",
+        "print_value": "3.4 eV"
+      },
+      "plot_types": [],
+      "data_type": null,
+      "minimif_id": "129349",
+      "mif_id": 212,
+      "permalink": "/uploads/212/samples/gan-band-gap"
+    }
+  ],
+  "time": 14,
+  "hits": 2
+}
 ```
 
 This endpoint retrieves all kittens.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET http://your-site.citrination.com/api/samples/simple_search`
 
 ### Query Parameters
 
-Parameter | Default | Description
+Parameter | Required | Description
 --------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+term | true | The basic search query
+formula | false | Limit the search results by the chemical formula entered here
+contributor | false | Limit the search results by the name of the person that contributed the data
+reference | false | Limit the search results by the original reference for the data
+min_measurement | false | Minimum decimal value for property value
+max_measurement | false | Maximum decimal value for property value
+from | false | If using pagination, set the starting record. Defaults to 0
+per_page | false | If using pagination, sets how many records to return. Defaults to 10
+
 
 <aside class="success">
 Remember — a happy kitten is an authenticated kitten!
@@ -165,4 +185,3 @@ This endpoint retrieves a specific kitten.
 Parameter | Description
 --------- | -----------
 ID | The ID of the kitten to retrieve
-
