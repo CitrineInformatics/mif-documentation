@@ -5,7 +5,6 @@ language_tabs:
   - python
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -54,8 +53,10 @@ api.kittens.get()
 ```
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+curl --data "term=GaN&from=0&per_page=10"
+ "http://your-site.citrination.com/api/samples/simple_search"
+  -H "X-API-Key: your-api-key"
+  -H "Content-Type: application/json"
 ```
 
 > The above command returns JSON structured like this:
@@ -118,8 +119,9 @@ curl "http://example.com/api/kittens"
 This endpoint retrieves all kittens.
 
 ### HTTP Request
-
-`GET http://your-site.citrination.com/api/samples/simple_search`
+```
+POST http://your-site.citrination.com/api/samples/simple_search
+```
 
 ### Query Parameters
 
@@ -136,17 +138,10 @@ per_page | false | If using pagination, sets how many records to return. Default
 
 
 <aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+Don't forget your API key!
 </aside>
 
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
+## Search a specific sample
 
 ```python
 import kittn
@@ -156,32 +151,80 @@ api.kittens.get(2)
 ```
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
+curl --data "term=GaN&from=0&per_page=10"
+ "http://your-site.citrination.com/api/uploads/213/simple_search"
+  -H "X-API-Key: your-api-key"
+  -H "Content-Type: application/json"
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "results": [
+    {
+      "formula": "GaN",
+      "display_formula": null,
+      "property_name": "Band gap",
+      "conditions": [],
+      "references": [
+        {
+          "citationFull": "Dr. Materials Band Gap Paper",
+          "citationShort": "Dr. Materials Band Gap Paper",
+          "url": null
+        }
+      ],
+      "display_contributor": "Dr. Materials",
+      "measurement": {
+        "name": "Band gap",
+        "units": "eV",
+        "type": "experimental",
+        "value_display": "3.4",
+        "print_value": "3.4 eV"
+      },
+      "plot_types": [],
+      "data_type": null,
+      "minimif_id": "129353",
+      "mif_id": 213,
+      "permalink": "/uploads/213/samples/gan-band-gap"
+    }
+  ],
+  "time": 14,
+  "hits": 2
 }
 ```
-
 This endpoint retrieves a specific kitten.
 
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
+<aside class="warning">
+You can use a ? in the 'term' parameter to retrieve all structured data for a given sample.
+</aside>
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+```
+POST http://your-site.citrination.com/api/uploads/<id>/simple_search
+```
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to retrieve
+ID | The ID of the sample to search
+
+### Query Parameters
+
+Parameter | Required | Description
+--------- | ------- | -----------
+term | true | The basic search query
+formula | false | Limit the search results by the chemical formula entered here
+contributor | false | Limit the search results by the name of the person that contributed the data
+reference | false | Limit the search results by the original reference for the data
+min_measurement | false | Minimum decimal value for property value
+max_measurement | false | Maximum decimal value for property value
+from | false | If using pagination, set the starting record. Defaults to 0
+per_page | false | If using pagination, sets how many records to return. Defaults to 10
+
+
+<aside class="success">
+Don't forget your API key!
+</aside>
