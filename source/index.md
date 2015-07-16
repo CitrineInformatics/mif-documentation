@@ -24,9 +24,8 @@ We have language bindings in Shell, Ruby, and Python! You can view code examples
 > To authenticate, you must obtain your API key from Citrine Informatics
 
 ```python
-import kittn
-
-api = kittn.authorize('your-unique-api-key')
+from citrination_client import CitrinationClient
+client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
 ```
 
 ```
@@ -44,12 +43,10 @@ Citrination expects for the API key to be included in all API requests to the se
 # Materials Data
 
 ## Search Data
-
 ```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+from citrination_client import CitrinationClient
+client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
+client.search(term='GaN', from_page=0, per_page=10)
 ```
 
 ```shell
@@ -140,10 +137,9 @@ Don't forget your API key!
 ## Filter Data
 
 ```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+from citrination_client import CitrinationClient
+client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
+client.filter(formula='GaN', from_page=0, per_page=10)
 ```
 
 ```shell
@@ -232,10 +228,9 @@ Don't forget your API key!
 
 ## Search a specific data set  
 ```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+from citrination_client import CitrinationClient
+client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
+client.search(term='GaN', from_page=0, per_page=10, dataset_id=213)
 ```
 
 ```shell
@@ -318,11 +313,10 @@ Don't forget your API key!
 
 ## Filter a specific data set  
 ```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+from citrination_client import CitrinationClient
+client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
+client.filter(formula='GaN', from_page=0, per_page=10, dataset_id=213)
+````
 
 ```shell
 curl --data "formula=GaN&from=0&per_page=10"
