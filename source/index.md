@@ -230,12 +230,12 @@ Don't forget your API key!
 ```python
 from citrination_client import CitrinationClient
 client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
-client.search(term='GaN', from_page=0, per_page=10, dataset_id=213)
+client.search(term='GaN', from_page=0, per_page=10, data_set_id=213)
 ```
 
 ```shell
 curl --data "term=GaN&from=0&per_page=10"
- "http://your-site.citrination.com/api/datasets/213/measurements/search"
+ "http://your-site.citrination.com/api/data_sets/213/measurements/search"
   -H "X-API-Key: your-api-key"
   -H "Content-Type: application/json"
 ```
@@ -275,7 +275,7 @@ curl --data "term=GaN&from=0&per_page=10"
   "hits": 2
 }
 ```
-This API is identical to the main search API, but limited to a particular dataset. You will notice that the search results include a "mif_id" field. This ID is the value to supply to the datasets endpoint when searching.
+This API is identical to the main search API, but limited to a particular data_set. You will notice that the search results include a "mif_id" field. This ID is the value to supply to the data_sets endpoint when searching.
 
 This endpoint searches data based on text input to the term field. We index chemical formulas in a variety of ways, and the term field in this method is very flexible. For example, you could search "band gap of gallium nitride", or "ternary oxides" and get back a variety of interesting results, ranked according to our proprietary scoring algorithm.
 
@@ -285,7 +285,7 @@ You can use a ? in the 'term' parameter to retrieve all structured data for a gi
 
 ### HTTP Request
 
-`POST http://your-site.citrination.com/api/datasets/<id>/measurements/search`
+`POST http://your-site.citrination.com/api/data_sets/<id>/measurements/search`
 
 ### URL Parameters
 
@@ -315,12 +315,12 @@ Don't forget your API key!
 ```python
 from citrination_client import CitrinationClient
 client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
-client.filter(formula='GaN', from_page=0, per_page=10, dataset_id=213)
+client.filter(formula='GaN', from_page=0, per_page=10, data_set_id=213)
 ````
 
 ```shell
 curl --data "formula=GaN&from=0&per_page=10"
- "http://your-site.citrination.com/api/datasets/213/samples/filter"
+ "http://your-site.citrination.com/api/data_sets/213/samples/filter"
   -H "X-API-Key: your-api-key"
   -H "Content-Type: application/json"
 ```
@@ -360,19 +360,19 @@ curl --data "formula=GaN&from=0&per_page=10"
   "hits": 2
 }
 ```
-This API is identical to the main filter API, but limited to a particular dataset. You will notice that the search results include a "mif_id" field. This ID is the value to supply to the datasets endpoint when searching.
+This API is identical to the main filter API, but limited to a particular data_set. You will notice that the search results include a "mif_id" field. This ID is the value to supply to the data_sets endpoint when searching.
 
 Filtering is a bit like searching, but for when you want a limited set of exact matches of data instead of a "friendlier" term search. Filtering on "GaN", for example, will not return results like GaN2. The API is very similar, but there is no term field. Note that our samples index uses the same underlying data as our measurement index, but the return values are slightly different..
 
 ### HTTP Request
 
-`POST http://your-site.citrination.com/api/datasets/<id>/samples/filter`
+`POST http://your-site.citrination.com/api/data_sets/<id>/samples/filter`
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the dataset to filter
+ID | The ID of the data_set to filter
 
 ### Query Parameters
 
