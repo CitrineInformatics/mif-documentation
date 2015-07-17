@@ -395,7 +395,7 @@ Don't forget your API key!
 ```python
 from citrination_client import CitrinationClient
 client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
-client.upload(name='My Published Paper', description='Band Gaps of My Favorite Compounds')
+client.upload(name='My Published Paper', description='Band Gaps of My Favorite Compounds', filename='mypaper.pdf')
 ```
 
 You can upload data using the python client, but not directly through HTTP at this time.
