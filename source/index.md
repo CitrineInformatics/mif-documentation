@@ -51,7 +51,7 @@ client.search(term='GaN', from_page=0, per_page=10)
 
 ```shell
 curl --data "term=GaN&from=0&per_page=10"
- "http://your-site.citrination.com/api/measurements/search"
+ "https://your-site.citrination.com/api/measurements/search"
   -H "X-API-Key: your-api-key"
   -H "Content-Type: application/json"
 ```
@@ -114,7 +114,7 @@ curl --data "term=GaN&from=0&per_page=10"
 This endpoint searches data based on text input to the term field. We index chemical formulas in a variety of ways, and the term field in this method is very flexible. For example, you could search "band gap of gallium nitride", or "ternary oxides" and get back a variety of interesting results, ranked according to our proprietary scoring algorithm.
 
 ### HTTP Request
-`POST http://your-site.citrination.com/api/measurements/search`
+`POST https://your-site.citrination.com/api/measurements/search`
 
 ### Query Parameters
 
@@ -207,7 +207,7 @@ curl --data "formula=GaN&from=0&per_page=10"
 Filtering is a bit like searching, but for when you want a limited set of exact matches of data instead of a "friendlier" term search. Filtering on "GaN", for example, will not return results like GaN2. The API is very similar, but there is no term field. Note that our samples index uses the same underlying data as our measurement index, but the return values are slightly different.
 
 ### HTTP Request
-`POST http://your-site.citrination.com/api/samples/filter`
+`POST https://your-site.citrination.com/api/samples/filter`
 
 ### Query Parameters
 
@@ -235,7 +235,7 @@ client.search(term='GaN', from_page=0, per_page=10, data_set_id=213)
 
 ```shell
 curl --data "term=GaN&from=0&per_page=10"
- "http://your-site.citrination.com/api/data_sets/213/measurements/search"
+ "https://your-site.citrination.com/api/data_sets/213/measurements/search"
   -H "X-API-Key: your-api-key"
   -H "Content-Type: application/json"
 ```
@@ -285,7 +285,7 @@ You can use a ? in the 'term' parameter to retrieve all structured data for a gi
 
 ### HTTP Request
 
-`POST http://your-site.citrination.com/api/data_sets/<id>/measurements/search`
+`POST https://your-site.citrination.com/api/data_sets/<id>/measurements/search`
 
 ### URL Parameters
 
@@ -320,7 +320,7 @@ client.filter(formula='GaN', from_page=0, per_page=10, data_set_id=213)
 
 ```shell
 curl --data "formula=GaN&from=0&per_page=10"
- "http://your-site.citrination.com/api/data_sets/213/samples/filter"
+ "https://your-site.citrination.com/api/data_sets/213/samples/filter"
   -H "X-API-Key: your-api-key"
   -H "Content-Type: application/json"
 ```
@@ -366,7 +366,7 @@ Filtering is a bit like searching, but for when you want a limited set of exact 
 
 ### HTTP Request
 
-`POST http://your-site.citrination.com/api/data_sets/<id>/samples/filter`
+`POST https://your-site.citrination.com/api/data_sets/<id>/samples/filter`
 
 ### URL Parameters
 
@@ -390,3 +390,14 @@ per_page | false | If using pagination, sets how many records to return. Default
 <aside class="success">
 Don't forget your API key!
 </aside>
+
+## Upload Data
+```python
+from citrination_client import CitrinationClient
+client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
+client.upload(name='My Published Paper', description='Band Gaps of My Favorite Compounds')
+```
+
+You can upload data using the python client, but not directly through HTTP at this time.
+Uploading data will start it off in our data processing pipeline, and in a few minutes time
+it will be available on the web via https://your-site.citrination.com/data_uploads
