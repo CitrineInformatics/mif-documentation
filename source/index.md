@@ -1,403 +1,478 @@
----
-title: Citrination API Reference
 
-language_tabs:
-  - python
+# Materials Information File (MIF)
 
-toc_footers:
-  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
+## Content
 
-includes:
-  - errors
+* [Introduction](#introduction)
+* [Adherence to the JSON Standard](#json)
+* [The Core Schema](#core)
+  * [Sample](#schema_sample)
+  * [Phase Diagram](#schema_phase_diagram)
+  * [Material](#schema_material)
+  * [Measurement](#schema_measurement)
+  * [Value](#schema_value)
+  * [Scalar](#schema_scalar)
+  * [Phase](#schema_phase)
+  * [Point](#schema_point)
+  * [Line](#schema_line)
+  * [Reference](#schema_reference)
+  * [Person](#schema_person)
+  * [Name](#schema_name)
+  * [Pages](#schema_pages)
+* [Extending the Schema](#extending)
+* [Serialized File Structure](#file_structure)
+* [Examples](#examples)
 
-search: true
----
+## <a name="introduction"/>Introduction
 
-# Introduction
+The MIF is a schema that is used to impose structure on materials data, facilitating its processing and transfer. It is designed to be flexible in order to represent the often complex data that is associated with materials research, development, and manufacturing.
 
-Welcome to the Citrination API Documentation! The Citrination API can be used to query our extensive database of material properties in a couple of exciting ways.
+Besides those that are listed in this document, objects will continue to be added to the core of the MIF schema. Additionally, users can add data as they see fit as [secondary objects](#extending), which could be promoted to the core schema in the future. The schema should be used as a basis for structuring materials data, with users adding to it as needed.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+## <a name="json"/>Adherence to the JSON Standard
 
-# Authentication
+MIF's must always be compliant with JSON standards.
 
-> To authenticate, you must obtain your API key from Citrine Informatics
+Particular to the MIF schema, all field names must be in <a name="camel_case"> camel case</a>: no spaces between words; all letters are lowercase, except the first letter of each word, which is uppercase; the first letter of the name is also lowercase. For example, the name "phase diagram" would be written as "phaseDiagram". Do not use underscores, hyphens, or other non-alphanumeric characters in field names.
 
-```python
-from citrination_client import CitrinationClient
-client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
+## <a name="core"/>The Core Schema
+
+This section contains the list of MIF objects that are part of the core schema. Each section contains a list of all of the fields that are a part of that object and information about what it contains.
+
+### <a name="schema_sample"/>Sample
+
+Sample objects are high-level structures used to store information about measurements that were made on a material.
+
+field name | nullable | value type | description
+-|-|-|-
+material | false | single [material](#schema_material) object | A description of the material.
+measurement | false | array of [measurement](#schema_measurement) objects | Information about any measurements that were taken on the sample.
+reference | true | array of [reference](#schema_reference) objects | Any references where information about the sample is published. If any references are specific to a single measurement, then they should be attached to the corresponding object in the *measurement* field.
+contact | true | array of [person](#schema_person) objects | Any people that can be contacted for information about the sample. If one or more people should be contacted only for a particular measurement, then they should be attached to the corresponding object in the *measurement* field.
+license | true | array of strings | Information about any licenses that apply to the entire sample. If any license applies only to a particular measurement, then it should be attached to the corresponding object in the *measurement* field.
+
+### <a name="schema_phase_diagram"/>Phase Diagram
+
+Phase diagram objects are high-level objects used to store information about a phase diagram and the materials that it describes.
+
+field name | nullable | value type | description
+-|-|-|-
+vertex | true | array of strings | Labels to apply to each of the vertices of the phase diagram. The order of these labels is consistent with coordinates. For example, ["Cu", "Au"] would correspond to Cu at coordinates (1, 0) and Au at coordinates (0, 1).
+phase | true | array of [phase](#schema_phase) objects | Detailed information about materials described in the phase diagram using [sample](#schema_sample) objects (via [phase](#schema_phase) objects). To simply add the name of a material use the *label* field instead.
+label | true | array of [point](#schema_point) objects | Labels to apply to the phase diagram. Note that anything already in the *vertex* field should not be included here.
+boundary | true | array of [line](#schema_line) objects | Boundaries inside of the phase diagram.
+dataType | true | "Experimental" or "Computational" | Label used to mark the data as generated via physical experiment or computational methods.
+reference | true | array of [reference](#schema_reference) objects | Any references where information about the phase diagram is published. If any references are specific to a single phase, then they should be attached to the corresponding object in the *phase* field.
+contact | true | array of [person](#schema_person) objects | Any people that can be contacted for information about the phase diagram. If one or more people should be contacted only for a particular phase, then they should be attached to the corresponding object in the *phase* field.
+license | true | array of strings | Information about any licenses that apply to the entire phase diagram. If any license applies only to a particular phase, then it should be attached to the corresponding object in the *phase* field.
+
+### <a name="schema_material"/>Material
+
+Material objects store information about the chemical composition of a material and its conditions.
+
+field name | nullable | value type | description
+-|-|-|-
+chemicalFormula | true | string | The chemical formula of the material using IUPAC standards.
+commonName | true | string | The common name of the material.
+condition | false | array of [value](#schema_value) objects | Conditions of the material such as its crystallinity, morphology, purity, etc. Note that external conditions generally do not belong in this field, but are more appropriately placed inside, for example, the *condition* field of a [measurement](#schema_measurement) object.
+
+### <a name="schema_measurement"/>Measurement
+
+Measurement objects contain information about a measurement of a sample and the external conditions that were applied.
+
+field name | nullable | value type | description
+-|-|-|-
+property | false | single [value](#schema_value) object | The name, value, and units of the measured property.
+condition | true | array of [value](#schema_value) objects | Details of the external conditions applied during a measurement. For example, the temperature and/or pressure.
+method | true | string | Description of the measurement method. For example, this field might contain information about a piece of equipment that was used, or information about a version of code with which a simulation was performed.
+dataType | true | "Experimental" or "Computational" | Label used to mark the data as generated via physical experiment or computational methods.
+reference | true | array of [reference](#schema_reference) objects | Any references where information about the measurement is published.
+contact | true | array of [person](#schema_person) objects | Any people that can be contacted for information about the measurement.
+license | true | array of strings | Information about any licenses that apply to the measurement.
+
+### <a name="schema_value"/>Value
+
+Object to store information about a single value, which can be a scalar, vector, or matrix.
+
+field name | nullable | value type | description
+-|-|-|-
+name | false | string | Name of the value.
+scalar | true | array of [scalar](#schema_scalar) objects | One or more scalars.
+vector | true | array of arrays of [scalar](#schema_scalar) objects | One or more vectors. Each sub-array represents a single vector.
+matrix | true | array of arrays of arrays of [scalar](#schema_scalar) objects | One or more matrices. Each sub-array-of-arrays represents a single matrix arranged by rows.
+units | true | string | Units of the value.
+
+\* While *scalar*, *vector*, and *matrix* are all nullable, exactly one must be non-null.
+
+### <a name="schema_scalar"/>Scalar
+
+Object to store information about a single scalar value. This field can represent a simple scalar value ("3.4"), a scalar with an uncertainty ("3.4" +- "0.1"), a minimum (>= "3.4"), a maximum (<= "3.4"), or a range ("2.7" - "4.1") using combinations of the available fields.
+
+field name | nullable | value type | description
+-|-|-|-
+value | true* | string | Exact value of the scalar.
+minimum | true* | string | Minimum value if this object represents a range.
+maximum | true* | string | Maximum value if this object represents a range.
+uncertainty | true | string | Uncertainty of *value*, *minimum*, and/or *maximum*.
+
+\* While all fields are nullable, at least one of *value*, *minimum*, and/or *maximum* must be non-null.
+
+### <a name="schema_phase"/>Phase
+
+Object to store detailed information about a phase in a phase diagram.
+
+field name | nullable | value type | description
+-|-|-|-
+sample | false | single [sample](#schema_sample) object | Details of the phase in a phase diagram.
+coordinate | false | array of floating point numbers | Coordinates where the phase appears in the phase diagram.
+
+### <name="schema_point"/>Point
+
+Object to store a point in a plot or a label in a phase diagram.
+
+field name | nullable | value type | description
+-|-|-|-
+coordinate | false | array of floating point numbers | Coordinates where the point appears.
+label | true | string | Text to print at the coordinates of the point.
+
+### <name="schema_line"/>Line
+
+Object to store a line on a plot or a boundary in a phase diagram.
+
+field name | nullable | value type | description
+-|-|-|-
+coordinate | false | array of arrays of floating point numbers | Coordinates of the points that define a line. Each sub-array represents the coordinates of one point on the line. The line will connect points in the order that they appear.
+label | true | string | Text to print on the line.
+
+### <a name="schema_reference"/>Reference
+
+Object to store information about a referenced work.
+
+field name | nullable | value type | description
+-|-|-|-
+doi | true | string | [Digital Object Identifier](http://www.doi.org) of the reference.
+isbn | true | string | [International Standard Book Number](http://www.isbn.org) of the reference.
+issn | true | string | [International Standard Serial Number](http://www.issn.org) of the reference.
+url | true | string | Internet address of the reference.
+title | true | string | Title of the work.
+publisher | true | string | Publisher of the work.
+journal | true | string | Journal in which the work appeared.
+volume | true | string | Volume of the series in which the work appeared.
+year | true | string | Year in which the reference was published.
+issue | true | string | Issue of the collection in which the work appeared.
+pages | true | single [pages](#schema_pages) object | Start and end pages of the work.
+author | true | array of [name](#schema_name) objects | List of authors of the work.
+editor | true | array of [name](#schema_name) objects | List of editors of the work.
+reference | true | array of [reference](#schema_reference) objects | References cited by the work. Reference objects can nest as deeply as needed. This is useful, for example, when tracking the history of a value referenced in a scholarly article; the top level reference would contain information about where the data was accessed while the nested reference would contain information about where it was originally published.
+
+### <a name="schema_person"/>Person
+
+Object to store information about a person and their contact information.
+
+field name | nullable | value type | description
+-|-|-|-
+name | true* | single [name](#schema_name) object | Name of the person.
+email | true* | string | Email address of the person.
+orcid | true* | string | [Open Researcher and Contributor ID](http://orcid.org) of the person.
+
+\* While all fields are nullable, at least one must be non-null.
+
+### <a name="schema_name"/>Name
+
+Object to store the given and family name of a person.
+
+field name | nullable | value type | description
+-|-|-|-
+given | true | string | Given (first) name.
+family | false | string | Family (last) name.
+
+### <a name="schema_pages"/>Pages
+
+Object to store the start and end pages of a reference.
+
+field name | nullable | value type | description
+-|-|-|-
+start | false | string | Starting page of a range.
+end | true | string | Ending page of a range.
+
+## <a name="extending"/>Extending the Schema
+
+All effort should be made to adhere to the [core schema](#core). However, in some cases, it may not be possible to structure some data in this way. Therefore, additional elements may be added by the user where needed as long as they are valid JSON.
+
+Additional objects will be added to the [core schema](#core) over time and any commonly used extensions of the schema will be considered for promotion.
+
+## <a name="file_structure"/>File Structure
+
+A single [MIF object](#core) or an array of [MIF objects](#core) can be stored in a JSON file. Each top level object should contain a single field. The name of that field must be equal to the type of the object that it contains (in [camel case](#camel_case)). The value of that field is equal to the actual [MIF object](#core). For example, a file that contains a single [sample](#schema_sample) would appear as:
+
 ```
-
-```
-# Authentication tokens must be applied to the headers of any requests made to the Citrination API
-curl "api_endpoint_here"
-  -H "X-API-Key: your-unique-api-key"
-```
-
-Citrination uses API keys to allow access to the API. You can register a new Kittn API key by logging in to your instance of Citrination, clicking on your username and selecting 'Account'.
-
-Citrination expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`X-API-Key: your-unique-api-key`
-
-# Materials Data
-
-## Search Data
-```python
-from citrination_client import CitrinationClient
-client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
-client.search(term='GaN', from_page=0, per_page=10)
-```
-
-```shell
-curl --data "term=GaN&from=0&per_page=10"
- "https://your-site.citrination.com/api/measurements/search"
-  -H "X-API-Key: your-api-key"
-  -H "Content-Type: application/json"
-```
-
-> The above command returns JSON structured like this:
-
-```json
 {
-  "results": [
+    "sample": {
+        "material": ...,
+        "measurement": ...
+    }
+}
+```
+
+Or similarly, a file that contains two sample [sample](#schema_sample) objects would be written as:
+
+```
+[
     {
-      "formula": "GaN",
-      "property_name": "Band gap",
-      "conditions": [],
-      "references": [
-        {
-          "citationFull": "Dr. Materials Band Gap Paper",
-          "citationShort": "Dr. Materials Band Gap Paper",
-          "url": null
+        "sample": {
+            "material": ...,
+            "measurement": ...
         }
-      ],
-      "display_contributor": "Dr. Materials",
-      "measurement": {
-        "name": "Band gap",
-        "units": "eV",
-        "type": "experimental",
-        "value_display": "3.4",
-        "print_value": "3.4 eV"
-      },
-      "plot_types": [],
-      "data_type": null,
-      "minimif_id": "129353",
-      "mif_id": 213,
-      "permalink": "/uploads/213/samples/gan-band-gap"
     },
     {
-      "formula": "GaN",
-      "property_name": "Band gap",
-      "conditions": [],
-      "references": null,
-      "display_contributor": "Dr. Materials",
-      "measurement": {
-        "name": "Band gap",
-        "units": "eV",
-        "type": "experimental",
-        "value_display": "3.4",
-        "print_value": "3.4 eV"
-      },
-      "plot_types": [],
-      "data_type": null,
-      "minimif_id": "129349",
-      "mif_id": 212,
-      "permalink": "/uploads/212/samples/gan-band-gap"
-    }
-  ],
-  "time": 14,
-  "hits": 2
-}
-```
-
-This endpoint searches data based on text input to the term field. We index chemical formulas in a variety of ways, and the term field in this method is very flexible. For example, you could search "band gap of gallium nitride", or "ternary oxides" and get back a variety of interesting results, ranked according to our proprietary scoring algorithm.
-
-### HTTP Request
-`POST https://your-site.citrination.com/api/measurements/search`
-
-### Query Parameters
-
-Parameter | Required | Description
---------- | ------- | -----------
-term | true | The basic search query
-formula | false | Limit the search results by the chemical formula entered here
-contributor | false | Limit the search results by the name of the person that contributed the data
-reference | false | Limit the search results by the original reference for the data
-min_measurement | false | Minimum decimal value for property value
-max_measurement | false | Maximum decimal value for property value
-from | false | If using pagination, set the starting record. Defaults to 0
-per_page | false | If using pagination, sets how many records to return. Defaults to 10
-
-
-<aside class="success">
-Don't forget your API key!
-</aside>
-
-## Filter Data
-
-```python
-from citrination_client import CitrinationClient
-client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
-client.filter(formula='GaN', from_page=0, per_page=10)
-```
-
-```shell
-curl --data "formula=GaN&from=0&per_page=10"
- "http://your-site.citrination.com/api/samples/filter"
-  -H "X-API-Key: your-api-key"
-  -H "Content-Type: application/json"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "results": [
-    {
-      "formula": "GaN",
-      "property_name": "Band gap",
-      "conditions": [],
-      "references": [
-        {
-          "citationFull": "Dr. Materials Band Gap Paper",
-          "citationShort": "Dr. Materials Band Gap Paper",
-          "url": null
+        "sample": {
+            "material": ...,
+            "measurement": ...
         }
-      ],
-      "display_contributor": "Dr. Materials",
-      "measurement": {
-        "name": "Band gap",
-        "units": "eV",
-        "type": "experimental",
-        "value_display": "3.4",
-        "print_value": "3.4 eV"
-      },
-      "plot_types": [],
-      "data_type": null,
-      "minimif_id": "129353",
-      "mif_id": 213,
-      "permalink": "/uploads/213/samples/gan-band-gap"
-    },
-    {
-      "formula": "GaN",
-      "property_name": "Band gap",
-      "conditions": [],
-      "references": null,
-      "display_contributor": "Dr. Materials",
-      "measurement": {
-        "name": "Band gap",
-        "units": "eV",
-        "type": "experimental",
-        "value_display": "3.4",
-        "print_value": "3.4 eV"
-      },
-      "plot_types": [],
-      "data_type": null,
-      "minimif_id": "129349",
-      "mif_id": 212,
-      "permalink": "/uploads/212/samples/gan-band-gap"
     }
-  ],
-  "time": 14,
-  "hits": 2
-}
+]
 ```
 
-Filtering is a bit like searching, but for when you want a limited set of exact matches of data instead of a "friendlier" term search. Filtering on "GaN", for example, will not return results like GaN2. The API is very similar, but there is no term field. Note that our samples index uses the same underlying data as our measurement index, but the return values are slightly different.
+## <a name="examples"/>Examples
 
-### HTTP Request
-`POST https://your-site.citrination.com/api/samples/filter`
+### Superconducting Critical Temperature of RbOs2O6
 
-### Query Parameters
+This record simply stores the superconducting critical temperature of RbOs2O6 and gives two references: the journal publication for that work as well as the corresponding link to arXiv.
 
-Parameter | Required | Description
---------- | ------- | -----------
-formula | false | Limit the search results by the chemical formula entered here
-contributor | false | Limit the search results by the name of the person that contributed the data
-reference | false | Limit the search results by the original reference for the data
-min_measurement | false | Minimum decimal value for property value
-max_measurement | false | Maximum decimal value for property value
-from | false | If using pagination, set the starting record. Defaults to 0
-per_page | false | If using pagination, sets how many records to return. Defaults to 10
-
-
-<aside class="success">
-Don't forget your API key!
-</aside>
-
-## Search a specific data set  
-```python
-from citrination_client import CitrinationClient
-client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
-client.search(term='GaN', from_page=0, per_page=10, data_set_id=213)
 ```
-
-```shell
-curl --data "term=GaN&from=0&per_page=10"
- "https://your-site.citrination.com/api/data_sets/213/measurements/search"
-  -H "X-API-Key: your-api-key"
-  -H "Content-Type: application/json"
-```
-
-> The above command returns JSON structured like this:
-
-```json
 {
-  "results": [
-    {
-      "formula": "GaN",
-      "property_name": "Band gap",
-      "conditions": [],
-      "references": [
-        {
-          "citationFull": "Dr. Materials Band Gap Paper",
-          "citationShort": "Dr. Materials Band Gap Paper",
-          "url": null
-        }
-      ],
-      "display_contributor": "Dr. Materials",
-      "measurement": {
-        "name": "Band gap",
-        "units": "eV",
-        "type": "experimental",
-        "value_display": "3.4",
-        "print_value": "3.4 eV"
-      },
-      "plot_types": [],
-      "data_type": "experimental",
-      "minimif_id": "129353",
-      "mif_id": 213,
-      "permalink": "/uploads/213/samples/gan-band-gap"
+    "sample": {
+        "material": {
+            "chemicalFormula": "RbOs2O6"
+        },
+        "measurement": [
+            {
+                "property": {
+                    "units": "K",
+                    "scalar": [
+                        {
+                            "value": "6.3"
+                        }
+                    ],
+                    "name": "Superconducting critical temperature (Tc)"
+                },
+                "reference": [
+                    {
+                        "url": "http://arxiv.org/abs/1109.5422v1"
+                    },
+                    {
+                        "doi": "10.1143/jpsj.80.104708"
+                    }
+                ]
+            }
+        ]
     }
-  ],
-  "time": 14,
-  "hits": 2
 }
 ```
-This API is identical to the main search API, but limited to a particular data_set. You will notice that the search results include a "mif_id" field. This ID is the value to supply to the data_sets endpoint when searching.
 
-This endpoint searches data based on text input to the term field. We index chemical formulas in a variety of ways, and the term field in this method is very flexible. For example, you could search "band gap of gallium nitride", or "ternary oxides" and get back a variety of interesting results, ranked according to our proprietary scoring algorithm.
+### Band Gap of LiF
 
-<aside class="warning">
-You can use a ? in the 'term' parameter to retrieve all structured data for a given sample.
-</aside>
+This record stores the band gap of single crystalline LiF as 13.6 eV. Additionally, it saves the DOI of the reference from which this value was extracted, that the measurement method was reflection, and that the gap is a direct transition measured at 300 K.
 
-### HTTP Request
-
-`POST https://your-site.citrination.com/api/data_sets/<id>/measurements/search`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the sample to search
-
-### Query Parameters
-
-Parameter | Required | Description
---------- | ------- | -----------
-term | true | The basic search query
-formula | false | Limit the search results by the chemical formula entered here
-contributor | false | Limit the search results by the name of the person that contributed the data
-reference | false | Limit the search results by the original reference for the data
-min_measurement | false | Minimum decimal value for property value
-max_measurement | false | Maximum decimal value for property value
-from | false | If using pagination, set the starting record. Defaults to 0
-per_page | false | If using pagination, sets how many records to return. Defaults to 10
-
-
-<aside class="success">
-Don't forget your API key!
-</aside>
-
-## Filter a specific data set  
-```python
-from citrination_client import CitrinationClient
-client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
-client.filter(formula='GaN', from_page=0, per_page=10, data_set_id=213)
-````
-
-```shell
-curl --data "formula=GaN&from=0&per_page=10"
- "https://your-site.citrination.com/api/data_sets/213/samples/filter"
-  -H "X-API-Key: your-api-key"
-  -H "Content-Type: application/json"
 ```
-
-> The above command returns JSON structured like this:
-
-```json
 {
-  "results": [
-    {
-      "formula": "GaN",
-      "property_name": "Band gap",
-      "conditions": [],
-      "references": [
-        {
-          "citationFull": "Dr. Materials Band Gap Paper",
-          "citationShort": "Dr. Materials Band Gap Paper",
-          "url": null
-        }
-      ],
-      "display_contributor": "Dr. Materials",
-      "measurement": {
-        "name": "Band gap",
-        "units": "eV",
-        "type": "experimental",
-        "value_display": "3.4",
-        "print_value": "3.4 eV"
-      },
-      "plot_types": [],
-      "data_type": "experimental",
-      "minimif_id": "129353",
-      "mif_id": 213,
-      "permalink": "/uploads/213/samples/gan-band-gap"
+    "sample": {
+        "material": {
+            "chemicalFormula": "LiF",
+            "condition": [
+                {
+                    "scalar": [
+                        {
+                            "value": "Single crystalline"
+                        }
+                    ],
+                    "name": "Crystallinity"
+                }
+            ]
+        },
+        "measurement": [
+            {
+                "dataType": "Experimental",
+                "reference": [
+                    {
+                        "doi": "10.1063/1.3253115"
+                    }
+                ],
+                "property": {
+                    "units": "eV",
+                    "scalar": [
+                        {
+                            "value": "13.6"
+                        }
+                    ],
+                    "name": "Band gap"
+                },
+                "method": "Reflection",
+                "condition": [
+                    {
+                        "scalar": [
+                            {
+                                "value": "Direct"
+                            }
+                        ],
+                        "name": "Transition"
+                    },
+                    {
+                        "units": "K",
+                        "scalar": [
+                            {
+                                "value": "300"
+                            }
+                        ],
+                        "name": "Temperature"
+                    }
+                ]
+            }
+        ]
     }
-  ],
-  "time": 14,
-  "hits": 2
 }
 ```
-This API is identical to the main filter API, but limited to a particular data_set. You will notice that the search results include a "mif_id" field. This ID is the value to supply to the data_sets endpoint when searching.
 
-Filtering is a bit like searching, but for when you want a limited set of exact matches of data instead of a "friendlier" term search. Filtering on "GaN", for example, will not return results like GaN2. The API is very similar, but there is no term field. Note that our samples index uses the same underlying data as our measurement index, but the return values are slightly different..
+### Properties of CaMnO3 Relevant to Thermoelectric Performance
 
-### HTTP Request
+This record stores several properties of polycrystalline CaMnO3 in space group 62, which has been prepared with a solid state reaction. It saves the electrical resistivity at 300 K as 50 ohm-cm, the Seebeck coefficient at 300 K as -462.97 uV/K, the power factor at 300 K as 4.2868E-07 W/m-K^2, and the electrical conductivity at 300 K as 2.0000E-02 S/cm. All values were extracted from the paper with doi 10.1021/cm400893e, which in turn referenced those values from the work at url http://www.jmst.org/EN/Y2009/V25/I04/0535.
 
-`POST https://your-site.citrination.com/api/data_sets/<id>/samples/filter`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the data_set to filter
-
-### Query Parameters
-
-Parameter | Required | Description
---------- | ------- | -----------
-formula | false | Limit the search results by the chemical formula entered here
-contributor | false | Limit the search results by the name of the person that contributed the data
-reference | false | Limit the search results by the original reference for the data
-min_measurement | false | Minimum decimal value for property value
-max_measurement | false | Maximum decimal value for property value
-from | false | If using pagination, set the starting record. Defaults to 0
-per_page | false | If using pagination, sets how many records to return. Defaults to 10
-
-
-<aside class="success">
-Don't forget your API key!
-</aside>
-
-## Upload Data
-```python
-from citrination_client import CitrinationClient
-client = CitrinationClient('your-unique-api-key', 'https://yoursite.citrination.com')
-client.upload(name='My Published Paper', description='Band Gaps of My Favorite Compounds', filename='mypaper.pdf')
 ```
-
-You can upload data using the python client, but not directly through HTTP at this time.
-Uploading data will start it off in our data processing pipeline, and in a few minutes time
-it will be available on the web via https://your-site.citrination.com/data_uploads
+{
+    "sample": {
+        "material": {
+            "chemicalFormula": "CaMnO3",
+            "condition": [
+                {
+                    "scalar": [
+                        {
+                            "value": "Polycrystalline"
+                        }
+                    ],
+                    "name": "Crystallinity"
+                },
+                {
+                    "scalar": [
+                        {
+                            "value": "Solid state reaction"
+                        }
+                    ],
+                    "name": "Preparation method"
+                },
+                {
+                    "scalar": [
+                        {
+                            "value": "62"
+                        }
+                    ],
+                    "name": "Space group"
+                }
+            ]
+        },
+        "measurement": [
+            {
+                "dataType": "Experimental",
+                "property": {
+                    "units": "ohm-cm",
+                    "scalar": [
+                        {
+                            "value": "50"
+                        }
+                    ],
+                    "name": "Electrical resistivity"
+                },
+                "condition": [
+                    {
+                        "units": "K",
+                        "scalar": [
+                            {
+                                "value": "300"
+                            }
+                        ],
+                        "name": "Temperature"
+                    }
+                ]
+            },
+            {
+                "dataType": "Experimental",
+                "property": {
+                    "units": "uV/K",
+                    "scalar": [
+                        {
+                            "value": "-462.97"
+                        }
+                    ],
+                    "name": "Seebeck coefficient"
+                },
+                "condition": [
+                    {
+                        "units": "K",
+                        "scalar": [
+                            {
+                                "value": "300"
+                            }
+                        ],
+                        "name": "Temperature"
+                    }
+                ]
+            },
+            {
+                "dataType": "Experimental",
+                "property": {
+                    "units": "W/m-K^2",
+                    "scalar": [
+                        {
+                            "value": "4.2868E-07"
+                        }
+                    ],
+                    "name": "Power factor"
+                },
+                "condition": [
+                    {
+                        "units": "K",
+                        "scalar": [
+                            {
+                                "value": "300"
+                            }
+                        ],
+                        "name": "Temperature"
+                    }
+                ]
+            },
+            {
+                "dataType": "Experimental",
+                "property": {
+                    "units": "S/cm",
+                    "scalar": [
+                        {
+                            "value": "2.0000E-02"
+                        }
+                    ],
+                    "name": "Electrical conductivity"
+                },
+                "condition": [
+                    {
+                        "units": "K",
+                        "scalar": [
+                            {
+                                "value": "300"
+                            }
+                        ],
+                        "name": "Temperature"
+                    }
+                ]
+            }
+        ],
+        "reference": [
+            {
+                "doi": "10.1021/cm400893e",
+                "reference": [
+                    {
+                        "url": "http://www.jmst.org/EN/Y2009/V25/I04/0535"
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
