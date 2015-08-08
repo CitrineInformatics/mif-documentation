@@ -600,8 +600,6 @@
 <p>Additional objects will be added to the <a href="#core">core schema</a> over time and any commonly used extensions of the schema will be considered for promotion.</p>
 
 <h1 id="a-name-file_structure-a"><a name="file_structure">File Structure</a></h1>
-
-<p>A single <a href="#core">MIF object</a> or an array of <a href="#core">MIF objects</a> can be stored in a JSON file. Each top level object should contain a single field. The name of that field must be equal to the type of the object that it contains (in <a href="#camel_case">camel case</a>). The value of that field is equal to the actual <a href="#core">MIF object</a>. For example, a file that contains a single <a href="#schema_sample">sample</a> would appear as:</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"sample"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"material"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
@@ -610,9 +608,9 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<div></div>
+<p>A single <a href="#core">MIF object</a> or an array of <a href="#core">MIF objects</a> can be stored in a JSON file. Each top level object should contain a single field. The name of that field must be equal to the type of the object that it contains (in <a href="#camel_case">camel case</a>). The value of that field is equal to the actual <a href="#core">MIF object</a>. For example, a file that contains a single <a href="#schema_sample">sample</a> would appear as:</p>
 
-<p>Or similarly, a file that contains two sample <a href="#schema_sample">sample</a> objects would be written as:</p>
+<div></div>
 <pre class="highlight json"><code><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
         </span><span class="nt">"sample"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -629,11 +627,11 @@
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 
+<p>Or similarly, a file that contains two <a href="#schema_sample">sample</a> objects would be written as:</p>
+
 <h1 id="a-name-examples-a"><a name="examples">Examples</a></h1>
 
 <h2 id="superconducting-critical-temperature-of-rbos2o6">Superconducting Critical Temperature of RbOs2O6</h2>
-
-<p>This record simply stores the superconducting critical temperature of RbOs2O6 and gives two references: the journal publication for that work as well as the corresponding link to arXiv.</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"sample"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"material"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -664,9 +662,9 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h2 id="band-gap-of-lif">Band Gap of LiF</h2>
+<p>This record simply stores the superconducting critical temperature of RbOs2O6 and gives two references: the journal publication for that work as well as the corresponding link to arXiv.</p>
 
-<p>This record stores the band gap of single crystalline LiF as 13.6 eV. Additionally, it saves the DOI of the reference from which this value was extracted, that the measurement method was reflection, and that the gap is a direct transition measured at 300 K.</p>
+<h2 id="band-gap-of-lif">Band Gap of LiF</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"sample"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"material"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -725,9 +723,9 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h2 id="properties-of-camno3-relevant-to-thermoelectric-performance">Properties of CaMnO3 Relevant to Thermoelectric Performance</h2>
+<p>This record stores the band gap of single crystalline LiF as 13.6 eV. Additionally, it saves the DOI of the reference from which this value was extracted, that the measurement method was reflection, and that the gap is a direct transition measured at 300 K.</p>
 
-<p>This record stores several properties of polycrystalline CaMnO3 in space group 62, which has been prepared with a solid state reaction. It saves the electrical resistivity at 300 K as 50 ohm-cm, the Seebeck coefficient at 300 K as -462.97 uV/K, the power factor at 300 K as 4.2868E-07 W/m-K^2, and the electrical conductivity at 300 K as 2.0000E-02 S/cm. All values were extracted from the paper with doi 10.1021/cm400893e, which in turn referenced those values from the work at url http://www.jmst.org/EN/Y2009/V25/I04/0535.</p>
+<h2 id="properties-of-camno3-relevant-to-thermoelectric-performance">Properties of CaMnO3 Relevant to Thermoelectric Performance</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"sample"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"material"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -866,6 +864,8 @@
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+
+<p>This record stores several properties of polycrystalline CaMnO3 in space group 62, which has been prepared with a solid state reaction. It saves the electrical resistivity at 300 K as 50 ohm-cm, the Seebeck coefficient at 300 K as -462.97 uV/K, the power factor at 300 K as 4.2868E-07 W/m-K^2, and the electrical conductivity at 300 K as 2.0000E-02 S/cm. All values were extracted from the paper with doi 10.1021/cm400893e, which in turn referenced those values from the work at url http://www.jmst.org/EN/Y2009/V25/I04/0535.</p>
 
       </div>
       <div class="dark-box">
