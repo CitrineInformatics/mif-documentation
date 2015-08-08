@@ -101,52 +101,195 @@
 
 <p>Phase diagram objects are high-level objects used to store information about a phase diagram and the materials that it describes.</p>
 
-<p>field name | nullable | value type | description
--|-|-|-
-vertex | true | array of strings | Labels to apply to each of the vertices of the phase diagram. The order of these labels is consistent with coordinates. For example, [&ldquo;Cu&rdquo;, &ldquo;Au&rdquo;] would correspond to Cu at coordinates (1, 0) and Au at coordinates (0, 1).
-phase | true | array of <a href="#schema_phase">phase</a> objects | Detailed information about materials described in the phase diagram using <a href="#schema_sample">sample</a> objects (via <a href="#schema_phase">phase</a> objects). To simply add the name of a material use the <em>label</em> field instead.
-label | true | array of <a href="#schema_point">point</a> objects | Labels to apply to the phase diagram. Note that anything already in the <em>vertex</em> field should not be included here.
-boundary | true | array of <a href="#schema_line">line</a> objects | Boundaries inside of the phase diagram.
-dataType | true | &ldquo;Experimental&rdquo; or &ldquo;Computational&rdquo; | Label used to mark the data as generated via physical experiment or computational methods.
-reference | true | array of <a href="#schema_reference">reference</a> objects | Any references where information about the phase diagram is published. If any references are specific to a single phase, then they should be attached to the corresponding object in the <em>phase</em> field.
-contact | true | array of <a href="#schema_person">person</a> objects | Any people that can be contacted for information about the phase diagram. If one or more people should be contacted only for a particular phase, then they should be attached to the corresponding object in the <em>phase</em> field.
-license | true | array of strings | Information about any licenses that apply to the entire phase diagram. If any license applies only to a particular phase, then it should be attached to the corresponding object in the <em>phase</em> field.</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>vertex</td>
+<td>true</td>
+<td>array of strings</td>
+<td>Labels to apply to each of the vertices of the phase diagram. The order of these labels is consistent with coordinates. For example, [&ldquo;Cu&rdquo;, &ldquo;Au&rdquo;] would correspond to Cu at coordinates (1, 0) and Au at coordinates (0, 1).</td>
+</tr>
+<tr>
+<td>phase</td>
+<td>true</td>
+<td>array of <a href="#schema_phase">phase</a> objects</td>
+<td>Detailed information about materials described in the phase diagram using <a href="#schema_sample">sample</a> objects (via <a href="#schema_phase">phase</a> objects). To simply add the name of a material use the <em>label</em> field instead.</td>
+</tr>
+<tr>
+<td>label</td>
+<td>true</td>
+<td>array of <a href="#schema_point">point</a> objects</td>
+<td>Labels to apply to the phase diagram. Note that anything already in the <em>vertex</em> field should not be included here.</td>
+</tr>
+<tr>
+<td>boundary</td>
+<td>true</td>
+<td>array of <a href="#schema_line">line</a> objects</td>
+<td>Boundaries inside of the phase diagram.</td>
+</tr>
+<tr>
+<td>dataType</td>
+<td>true</td>
+<td>&ldquo;Experimental&rdquo; or &ldquo;Computational&rdquo;</td>
+<td>Label used to mark the data as generated via physical experiment or computational methods.</td>
+</tr>
+<tr>
+<td>reference</td>
+<td>true</td>
+<td>array of <a href="#schema_reference">reference</a> objects</td>
+<td>Any references where information about the phase diagram is published. If any references are specific to a single phase, then they should be attached to the corresponding object in the <em>phase</em> field.</td>
+</tr>
+<tr>
+<td>contact</td>
+<td>true</td>
+<td>array of <a href="#schema_person">person</a> objects</td>
+<td>Any people that can be contacted for information about the phase diagram. If one or more people should be contacted only for a particular phase, then they should be attached to the corresponding object in the <em>phase</em> field.</td>
+</tr>
+<tr>
+<td>license</td>
+<td>true</td>
+<td>array of strings</td>
+<td>Information about any licenses that apply to the entire phase diagram. If any license applies only to a particular phase, then it should be attached to the corresponding object in the <em>phase</em> field.</td>
+</tr>
+</tbody></table>
 
 <h3 id="a-name-schema_material-a"><a name="schema_material">Material</a></h3>
 
 <p>Material objects store information about the chemical composition of a material and its conditions.</p>
 
-<p>field name | nullable | value type | description
--|-|-|-
-chemicalFormula | true | string | The chemical formula of the material using IUPAC standards.
-commonName | true | string | The common name of the material.
-condition | false | array of <a href="#schema_value">value</a> objects | Conditions of the material such as its crystallinity, morphology, purity, etc. Note that external conditions generally do not belong in this field, but are more appropriately placed inside, for example, the <em>condition</em> field of a <a href="#schema_measurement">measurement</a> object.</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>chemicalFormula</td>
+<td>true</td>
+<td>string</td>
+<td>The chemical formula of the material using IUPAC standards.</td>
+</tr>
+<tr>
+<td>commonName</td>
+<td>true</td>
+<td>string</td>
+<td>The common name of the material.</td>
+</tr>
+<tr>
+<td>condition</td>
+<td>false</td>
+<td>array of <a href="#schema_value">value</a> objects</td>
+<td>Conditions of the material such as its crystallinity, morphology, purity, etc. Note that external conditions generally do not belong in this field, but are more appropriately placed inside, for example, the <em>condition</em> field of a <a href="#schema_measurement">measurement</a> object.</td>
+</tr>
+</tbody></table>
 
 <h3 id="a-name-schema_measurement-a"><a name="schema_measurement">Measurement</a></h3>
 
 <p>Measurement objects contain information about a measurement of a sample and the external conditions that were applied.</p>
 
-<p>field name | nullable | value type | description
--|-|-|-
-property | false | single <a href="#schema_value">value</a> object | The name, value, and units of the measured property.
-condition | true | array of <a href="#schema_value">value</a> objects | Details of the external conditions applied during a measurement. For example, the temperature and/or pressure.
-method | true | string | Description of the measurement method. For example, this field might contain information about a piece of equipment that was used, or information about a version of code with which a simulation was performed.
-dataType | true | &ldquo;Experimental&rdquo; or &ldquo;Computational&rdquo; | Label used to mark the data as generated via physical experiment or computational methods.
-reference | true | array of <a href="#schema_reference">reference</a> objects | Any references where information about the measurement is published.
-contact | true | array of <a href="#schema_person">person</a> objects | Any people that can be contacted for information about the measurement.
-license | true | array of strings | Information about any licenses that apply to the measurement.</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>property</td>
+<td>false</td>
+<td>single <a href="#schema_value">value</a> object</td>
+<td>The name, value, and units of the measured property.</td>
+</tr>
+<tr>
+<td>condition</td>
+<td>true</td>
+<td>array of <a href="#schema_value">value</a> objects</td>
+<td>Details of the external conditions applied during a measurement. For example, the temperature and/or pressure.</td>
+</tr>
+<tr>
+<td>method</td>
+<td>true</td>
+<td>string</td>
+<td>Description of the measurement method. For example, this field might contain information about a piece of equipment that was used, or information about a version of code with which a simulation was performed.</td>
+</tr>
+<tr>
+<td>dataType</td>
+<td>true</td>
+<td>&ldquo;Experimental&rdquo; or &ldquo;Computational&rdquo;</td>
+<td>Label used to mark the data as generated via physical experiment or computational methods.</td>
+</tr>
+<tr>
+<td>reference</td>
+<td>true</td>
+<td>array of <a href="#schema_reference">reference</a> objects</td>
+<td>Any references where information about the measurement is published.</td>
+</tr>
+<tr>
+<td>contact</td>
+<td>true</td>
+<td>array of <a href="#schema_person">person</a> objects</td>
+<td>Any people that can be contacted for information about the measurement.</td>
+</tr>
+<tr>
+<td>license</td>
+<td>true</td>
+<td>array of strings</td>
+<td>Information about any licenses that apply to the measurement.</td>
+</tr>
+</tbody></table>
 
 <h3 id="a-name-schema_value-a"><a name="schema_value">Value</a></h3>
 
 <p>Object to store information about a single value, which can be a scalar, vector, or matrix.</p>
 
-<p>field name | nullable | value type | description
--|-|-|-
-name | false | string | Name of the value.
-scalar | true | array of <a href="#schema_scalar">scalar</a> objects | One or more scalars.
-vector | true | array of arrays of <a href="#schema_scalar">scalar</a> objects | One or more vectors. Each sub-array represents a single vector.
-matrix | true | array of arrays of arrays of <a href="#schema_scalar">scalar</a> objects | One or more matrices. Each sub-array-of-arrays represents a single matrix arranged by rows.
-units | true | string | Units of the value.</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>false</td>
+<td>string</td>
+<td>Name of the value.</td>
+</tr>
+<tr>
+<td>scalar</td>
+<td>true</td>
+<td>array of <a href="#schema_scalar">scalar</a> objects</td>
+<td>One or more scalars.</td>
+</tr>
+<tr>
+<td>vector</td>
+<td>true</td>
+<td>array of arrays of <a href="#schema_scalar">scalar</a> objects</td>
+<td>One or more vectors. Each sub-array represents a single vector.</td>
+</tr>
+<tr>
+<td>matrix</td>
+<td>true</td>
+<td>array of arrays of arrays of <a href="#schema_scalar">scalar</a> objects</td>
+<td>One or more matrices. Each sub-array-of-arrays represents a single matrix arranged by rows.</td>
+</tr>
+<tr>
+<td>units</td>
+<td>true</td>
+<td>string</td>
+<td>Units of the value.</td>
+</tr>
+</tbody></table>
 
 <p>* While <em>scalar</em>, <em>vector</em>, and <em>matrix</em> are all nullable, exactly one must be non-null.</p>
 
@@ -154,12 +297,39 @@ units | true | string | Units of the value.</p>
 
 <p>Object to store information about a single scalar value. This field can represent a simple scalar value (&ldquo;3.4&rdquo;), a scalar with an uncertainty (&ldquo;3.4&rdquo; +- &ldquo;0.1&rdquo;), a minimum (&gt;= &ldquo;3.4&rdquo;), a maximum (&lt;= &ldquo;3.4&rdquo;), or a range (&ldquo;2.7&rdquo; - &ldquo;4.1&rdquo;) using combinations of the available fields.</p>
 
-<p>field name | nullable | value type | description
--|-|-|-
-value | true* | string | Exact value of the scalar.
-minimum | true* | string | Minimum value if this object represents a range.
-maximum | true* | string | Maximum value if this object represents a range.
-uncertainty | true | string | Uncertainty of <em>value</em>, <em>minimum</em>, and/or <em>maximum</em>.</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>value</td>
+<td>true*</td>
+<td>string</td>
+<td>Exact value of the scalar.</td>
+</tr>
+<tr>
+<td>minimum</td>
+<td>true*</td>
+<td>string</td>
+<td>Minimum value if this object represents a range.</td>
+</tr>
+<tr>
+<td>maximum</td>
+<td>true*</td>
+<td>string</td>
+<td>Maximum value if this object represents a range.</td>
+</tr>
+<tr>
+<td>uncertainty</td>
+<td>true</td>
+<td>string</td>
+<td>Uncertainty of <em>value</em>, <em>minimum</em>, and/or <em>maximum</em>.</td>
+</tr>
+</tbody></table>
 
 <p>* While all fields are nullable, at least one of <em>value</em>, <em>minimum</em>, and/or <em>maximum</em> must be non-null.</p>
 
@@ -167,59 +337,209 @@ uncertainty | true | string | Uncertainty of <em>value</em>, <em>minimum</em>, a
 
 <p>Object to store detailed information about a phase in a phase diagram.</p>
 
-<p>field name | nullable | value type | description
--|-|-|-
-sample | false | single <a href="#schema_sample">sample</a> object | Details of the phase in a phase diagram.
-coordinate | false | array of floating point numbers | Coordinates where the phase appears in the phase diagram.</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sample</td>
+<td>false</td>
+<td>single <a href="#schema_sample">sample</a> object</td>
+<td>Details of the phase in a phase diagram.</td>
+</tr>
+<tr>
+<td>coordinate</td>
+<td>false</td>
+<td>array of floating point numbers</td>
+<td>Coordinates where the phase appears in the phase diagram.</td>
+</tr>
+</tbody></table>
 
 <h3 id="name-schema_point-a"><name="schema_point">Point</a></h3>
 
 <p>Object to store a point in a plot or a label in a phase diagram.</p>
 
-<p>field name | nullable | value type | description
--|-|-|-
-coordinate | false | array of floating point numbers | Coordinates where the point appears.
-label | true | string | Text to print at the coordinates of the point.</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>coordinate</td>
+<td>false</td>
+<td>array of floating point numbers</td>
+<td>Coordinates where the point appears.</td>
+</tr>
+<tr>
+<td>label</td>
+<td>true</td>
+<td>string</td>
+<td>Text to print at the coordinates of the point.</td>
+</tr>
+</tbody></table>
 
 <h3 id="name-schema_line-a"><name="schema_line">Line</a></h3>
 
 <p>Object to store a line on a plot or a boundary in a phase diagram.</p>
 
-<p>field name | nullable | value type | description
--|-|-|-
-coordinate | false | array of arrays of floating point numbers | Coordinates of the points that define a line. Each sub-array represents the coordinates of one point on the line. The line will connect points in the order that they appear.
-label | true | string | Text to print on the line.</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>coordinate</td>
+<td>false</td>
+<td>array of arrays of floating point numbers</td>
+<td>Coordinates of the points that define a line. Each sub-array represents the coordinates of one point on the line. The line will connect points in the order that they appear.</td>
+</tr>
+<tr>
+<td>label</td>
+<td>true</td>
+<td>string</td>
+<td>Text to print on the line.</td>
+</tr>
+</tbody></table>
 
 <h3 id="a-name-schema_reference-a"><a name="schema_reference">Reference</a></h3>
 
 <p>Object to store information about a referenced work.</p>
 
-<p>field name | nullable | value type | description
--|-|-|-
-doi | true | string | <a href="http://www.doi.org">Digital Object Identifier</a> of the reference.
-isbn | true | string | <a href="http://www.isbn.org">International Standard Book Number</a> of the reference.
-issn | true | string | <a href="http://www.issn.org">International Standard Serial Number</a> of the reference.
-url | true | string | Internet address of the reference.
-title | true | string | Title of the work.
-publisher | true | string | Publisher of the work.
-journal | true | string | Journal in which the work appeared.
-volume | true | string | Volume of the series in which the work appeared.
-year | true | string | Year in which the reference was published.
-issue | true | string | Issue of the collection in which the work appeared.
-pages | true | single <a href="#schema_pages">pages</a> object | Start and end pages of the work.
-author | true | array of <a href="#schema_name">name</a> objects | List of authors of the work.
-editor | true | array of <a href="#schema_name">name</a> objects | List of editors of the work.
-reference | true | array of <a href="#schema_reference">reference</a> objects | References cited by the work. Reference objects can nest as deeply as needed. This is useful, for example, when tracking the history of a value referenced in a scholarly article; the top level reference would contain information about where the data was accessed while the nested reference would contain information about where it was originally published.</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>doi</td>
+<td>true</td>
+<td>string</td>
+<td><a href="http://www.doi.org">Digital Object Identifier</a> of the reference.</td>
+</tr>
+<tr>
+<td>isbn</td>
+<td>true</td>
+<td>string</td>
+<td><a href="http://www.isbn.org">International Standard Book Number</a> of the reference.</td>
+</tr>
+<tr>
+<td>issn</td>
+<td>true</td>
+<td>string</td>
+<td><a href="http://www.issn.org">International Standard Serial Number</a> of the reference.</td>
+</tr>
+<tr>
+<td>url</td>
+<td>true</td>
+<td>string</td>
+<td>Internet address of the reference.</td>
+</tr>
+<tr>
+<td>title</td>
+<td>true</td>
+<td>string</td>
+<td>Title of the work.</td>
+</tr>
+<tr>
+<td>publisher</td>
+<td>true</td>
+<td>string</td>
+<td>Publisher of the work.</td>
+</tr>
+<tr>
+<td>journal</td>
+<td>true</td>
+<td>string</td>
+<td>Journal in which the work appeared.</td>
+</tr>
+<tr>
+<td>volume</td>
+<td>true</td>
+<td>string</td>
+<td>Volume of the series in which the work appeared.</td>
+</tr>
+<tr>
+<td>year</td>
+<td>true</td>
+<td>string</td>
+<td>Year in which the reference was published.</td>
+</tr>
+<tr>
+<td>issue</td>
+<td>true</td>
+<td>string</td>
+<td>Issue of the collection in which the work appeared.</td>
+</tr>
+<tr>
+<td>pages</td>
+<td>true</td>
+<td>single <a href="#schema_pages">pages</a> object</td>
+<td>Start and end pages of the work.</td>
+</tr>
+<tr>
+<td>author</td>
+<td>true</td>
+<td>array of <a href="#schema_name">name</a> objects</td>
+<td>List of authors of the work.</td>
+</tr>
+<tr>
+<td>editor</td>
+<td>true</td>
+<td>array of <a href="#schema_name">name</a> objects</td>
+<td>List of editors of the work.</td>
+</tr>
+<tr>
+<td>reference</td>
+<td>true</td>
+<td>array of <a href="#schema_reference">reference</a> objects</td>
+<td>References cited by the work. Reference objects can nest as deeply as needed. This is useful, for example, when tracking the history of a value referenced in a scholarly article; the top level reference would contain information about where the data was accessed while the nested reference would contain information about where it was originally published.</td>
+</tr>
+</tbody></table>
 
 <h3 id="a-name-schema_person-a"><a name="schema_person">Person</a></h3>
 
 <p>Object to store information about a person and their contact information.</p>
 
-<p>field name | nullable | value type | description
--|-|-|-
-name | true* | single <a href="#schema_name">name</a> object | Name of the person.
-email | true* | string | Email address of the person.
-orcid | true* | string | <a href="http://orcid.org">Open Researcher and Contributor ID</a> of the person.</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>true*</td>
+<td>single <a href="#schema_name">name</a> object</td>
+<td>Name of the person.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>true*</td>
+<td>string</td>
+<td>Email address of the person.</td>
+</tr>
+<tr>
+<td>orcid</td>
+<td>true*</td>
+<td>string</td>
+<td><a href="http://orcid.org">Open Researcher and Contributor ID</a> of the person.</td>
+</tr>
+</tbody></table>
 
 <p>* While all fields are nullable, at least one must be non-null.</p>
 
@@ -227,19 +547,53 @@ orcid | true* | string | <a href="http://orcid.org">Open Researcher and Contribu
 
 <p>Object to store the given and family name of a person.</p>
 
-<p>field name | nullable | value type | description
--|-|-|-
-given | true | string | Given (first) name.
-family | false | string | Family (last) name.</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>given</td>
+<td>true</td>
+<td>string</td>
+<td>Given (first) name.</td>
+</tr>
+<tr>
+<td>family</td>
+<td>false</td>
+<td>string</td>
+<td>Family (last) name.</td>
+</tr>
+</tbody></table>
 
 <h3 id="a-name-schema_pages-a"><a name="schema_pages">Pages</a></h3>
 
 <p>Object to store the start and end pages of a reference.</p>
 
-<p>field name | nullable | value type | description
--|-|-|-
-start | false | string | Starting page of a range.
-end | true | string | Ending page of a range.</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>start</td>
+<td>false</td>
+<td>string</td>
+<td>Starting page of a range.</td>
+</tr>
+<tr>
+<td>end</td>
+<td>true</td>
+<td>string</td>
+<td>Ending page of a range.</td>
+</tr>
+</tbody></table>
 
 <h2 id="a-name-extending-a"><a name="extending">Extending the Schema</a></h2>
 
