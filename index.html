@@ -57,13 +57,45 @@
 
 <p>Sample objects are high-level structures used to store information about measurements that were made on a material.</p>
 
-<p>field name | nullable | value type | description
--|-|-|-
-material | false | single <a href="#schema_material">material</a> object | A description of the material.
-measurement | false | array of <a href="#schema_measurement">measurement</a> objects | Information about any measurements that were taken on the sample.
-reference | true | array of <a href="#schema_reference">reference</a> objects | Any references where information about the sample is published. If any references are specific to a single measurement, then they should be attached to the corresponding object in the <em>measurement</em> field.
-contact | true | array of <a href="#schema_person">person</a> objects | Any people that can be contacted for information about the sample. If one or more people should be contacted only for a particular measurement, then they should be attached to the corresponding object in the <em>measurement</em> field.
-license | true | array of strings | Information about any licenses that apply to the entire sample. If any license applies only to a particular measurement, then it should be attached to the corresponding object in the <em>measurement</em> field.</p>
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>material</td>
+<td>false</td>
+<td>single <a href="#schema_material">material</a> object</td>
+<td>A description of the material.</td>
+</tr>
+<tr>
+<td>measurement</td>
+<td>false</td>
+<td>array of <a href="#schema_measurement">measurement</a> objects</td>
+<td>Information about any measurements that were taken on the sample.</td>
+</tr>
+<tr>
+<td>reference</td>
+<td>true</td>
+<td>array of <a href="#schema_reference">reference</a> objects</td>
+<td>Any references where information about the sample is published. If any references are specific to a single measurement, then they should be attached to the corresponding object in the <em>measurement</em> field.</td>
+</tr>
+<tr>
+<td>contact</td>
+<td>true</td>
+<td>array of <a href="#schema_person">person</a> objects</td>
+<td>Any people that can be contacted for information about the sample. If one or more people should be contacted only for a particular measurement, then they should be attached to the corresponding object in the <em>measurement</em> field.</td>
+</tr>
+<tr>
+<td>license</td>
+<td>true</td>
+<td>array of strings</td>
+<td>Information about any licenses that apply to the entire sample. If any license applies only to a particular measurement, then it should be attached to the corresponding object in the <em>measurement</em> field.</td>
+</tr>
+</tbody></table>
 
 <h3 id="a-name-schema_phase_diagram-a"><a name="schema_phase_diagram">Phase Diagram</a></h3>
 
