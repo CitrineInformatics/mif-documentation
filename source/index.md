@@ -9,7 +9,7 @@ search: true
 
 # Materials Information File (MIF)
 
-## <a name="introduction"/>Introduction
+## <a name="introduction">Introduction</a>
 
 The MIF is a schema that is used to impose structure on materials data, facilitating its processing and transfer. It is designed to be flexible in order to represent the often complex data that is associated with materials research, development, and manufacturing.
 
