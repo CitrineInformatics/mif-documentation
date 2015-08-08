@@ -13,7 +13,7 @@ The MIF is a schema that is used to impose structure on materials data, facilita
 
 Besides those that are listed in this document, objects will continue to be added to the core of the MIF schema. Additionally, users can add data as they see fit as [secondary objects](#extending), which could be promoted to the core schema in the future. The schema should be used as a basis for structuring materials data, with users adding to it as needed.
 
-# <a name="json">Adherence to the JSON Standard</a>
+# <a name="json">Adherence to JSON Standards</a>
 
 MIF's must always be compliant with JSON standards.
 
@@ -197,6 +197,8 @@ A single [MIF object](#core) or an array of [MIF objects](#core) can be stored i
     }
 }
 ```
+
+####
 
 Or similarly, a file that contains two sample [sample](#schema_sample) objects would be written as:
 
