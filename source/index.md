@@ -42,7 +42,7 @@ license | true | array of strings | Information about any licenses that apply to
 Phase diagram objects are high-level objects used to store information about a phase diagram and the materials that it describes.
 
 field name | nullable | value type | description
--|-|-|-
+-----------|----------|------------|------------
 vertex | true | array of strings | Labels to apply to each of the vertices of the phase diagram. The order of these labels is consistent with coordinates. For example, ["Cu", "Au"] would correspond to Cu at coordinates (1, 0) and Au at coordinates (0, 1).
 phase | true | array of [phase](#schema_phase) objects | Detailed information about materials described in the phase diagram using [sample](#schema_sample) objects (via [phase](#schema_phase) objects). To simply add the name of a material use the *label* field instead.
 label | true | array of [point](#schema_point) objects | Labels to apply to the phase diagram. Note that anything already in the *vertex* field should not be included here.
@@ -57,7 +57,7 @@ license | true | array of strings | Information about any licenses that apply to
 Material objects store information about the chemical composition of a material and its conditions.
 
 field name | nullable | value type | description
--|-|-|-
+-----------|----------|------------|------------
 chemicalFormula | true | string | The chemical formula of the material using IUPAC standards.
 commonName | true | string | The common name of the material.
 condition | false | array of [value](#schema_value) objects | Conditions of the material such as its crystallinity, morphology, purity, etc. Note that external conditions generally do not belong in this field, but are more appropriately placed inside, for example, the *condition* field of a [measurement](#schema_measurement) object.
@@ -67,7 +67,7 @@ condition | false | array of [value](#schema_value) objects | Conditions of the 
 Measurement objects contain information about a measurement of a sample and the external conditions that were applied.
 
 field name | nullable | value type | description
--|-|-|-
+-----------|----------|------------|------------
 property | false | single [value](#schema_value) object | The name, value, and units of the measured property.
 condition | true | array of [value](#schema_value) objects | Details of the external conditions applied during a measurement. For example, the temperature and/or pressure.
 method | true | string | Description of the measurement method. For example, this field might contain information about a piece of equipment that was used, or information about a version of code with which a simulation was performed.
@@ -81,7 +81,7 @@ license | true | array of strings | Information about any licenses that apply to
 Object to store information about a single value, which can be a scalar, vector, or matrix.
 
 field name | nullable | value type | description
--|-|-|-
+-----------|----------|------------|------------
 name | false | string | Name of the value.
 scalar | true | array of [scalar](#schema_scalar) objects | One or more scalars.
 vector | true | array of arrays of [scalar](#schema_scalar) objects | One or more vectors. Each sub-array represents a single vector.
@@ -95,7 +95,7 @@ units | true | string | Units of the value.
 Object to store information about a single scalar value. This field can represent a simple scalar value ("3.4"), a scalar with an uncertainty ("3.4" +- "0.1"), a minimum (>= "3.4"), a maximum (<= "3.4"), or a range ("2.7" - "4.1") using combinations of the available fields.
 
 field name | nullable | value type | description
--|-|-|-
+-----------|----------|------------|------------
 value | true* | string | Exact value of the scalar.
 minimum | true* | string | Minimum value if this object represents a range.
 maximum | true* | string | Maximum value if this object represents a range.
@@ -108,7 +108,7 @@ uncertainty | true | string | Uncertainty of *value*, *minimum*, and/or *maximum
 Object to store detailed information about a phase in a phase diagram.
 
 field name | nullable | value type | description
--|-|-|-
+-----------|----------|------------|------------
 sample | false | single [sample](#schema_sample) object | Details of the phase in a phase diagram.
 coordinate | false | array of floating point numbers | Coordinates where the phase appears in the phase diagram.
 
@@ -117,7 +117,7 @@ coordinate | false | array of floating point numbers | Coordinates where the pha
 Object to store a point in a plot or a label in a phase diagram.
 
 field name | nullable | value type | description
--|-|-|-
+-----------|----------|------------|------------
 coordinate | false | array of floating point numbers | Coordinates where the point appears.
 label | true | string | Text to print at the coordinates of the point.
 
@@ -126,7 +126,7 @@ label | true | string | Text to print at the coordinates of the point.
 Object to store a line on a plot or a boundary in a phase diagram.
 
 field name | nullable | value type | description
--|-|-|-
+-----------|----------|------------|------------
 coordinate | false | array of arrays of floating point numbers | Coordinates of the points that define a line. Each sub-array represents the coordinates of one point on the line. The line will connect points in the order that they appear.
 label | true | string | Text to print on the line.
 
@@ -135,7 +135,7 @@ label | true | string | Text to print on the line.
 Object to store information about a referenced work.
 
 field name | nullable | value type | description
--|-|-|-
+-----------|----------|------------|------------
 doi | true | string | [Digital Object Identifier](http://www.doi.org) of the reference.
 isbn | true | string | [International Standard Book Number](http://www.isbn.org) of the reference.
 issn | true | string | [International Standard Serial Number](http://www.issn.org) of the reference.
@@ -156,7 +156,7 @@ reference | true | array of [reference](#schema_reference) objects | References 
 Object to store information about a person and their contact information.
 
 field name | nullable | value type | description
--|-|-|-
+-----------|----------|------------|------------
 name | true* | single [name](#schema_name) object | Name of the person.
 email | true* | string | Email address of the person.
 orcid | true* | string | [Open Researcher and Contributor ID](http://orcid.org) of the person.
@@ -168,7 +168,7 @@ orcid | true* | string | [Open Researcher and Contributor ID](http://orcid.org) 
 Object to store the given and family name of a person.
 
 field name | nullable | value type | description
--|-|-|-
+-----------|----------|------------|------------
 given | true | string | Given (first) name.
 family | false | string | Family (last) name.
 
@@ -177,7 +177,7 @@ family | false | string | Family (last) name.
 Object to store the start and end pages of a reference.
 
 field name | nullable | value type | description
--|-|-|-
+-----------|----------|------------|------------
 start | false | string | Starting page of a range.
 end | true | string | Ending page of a range.
 
