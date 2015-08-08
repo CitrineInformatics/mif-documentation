@@ -30,7 +30,7 @@ This section contains the list of MIF objects that are part of the core schema. 
 Sample objects are high-level structures used to store information about measurements that were made on a material.
 
 field name | nullable | value type | description
--|-|-|-
+-----------|----------|------------|------------
 material | false | single [material](#schema_material) object | A description of the material.
 measurement | false | array of [measurement](#schema_measurement) objects | Information about any measurements that were taken on the sample.
 reference | true | array of [reference](#schema_reference) objects | Any references where information about the sample is published. If any references are specific to a single measurement, then they should be attached to the corresponding object in the *measurement* field.
