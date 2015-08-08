@@ -1,27 +1,19 @@
+---
+title: MIF Reference
+
+language_tabs:
+  - python
+
+toc_footers:
+  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
+
+includes:
+  - errors
+
+search: true
+---
 
 # Materials Information File (MIF)
-
-## Content
-
-* [Introduction](#introduction)
-* [Adherence to the JSON Standard](#json)
-* [The Core Schema](#core)
-  * [Sample](#schema_sample)
-  * [Phase Diagram](#schema_phase_diagram)
-  * [Material](#schema_material)
-  * [Measurement](#schema_measurement)
-  * [Value](#schema_value)
-  * [Scalar](#schema_scalar)
-  * [Phase](#schema_phase)
-  * [Point](#schema_point)
-  * [Line](#schema_line)
-  * [Reference](#schema_reference)
-  * [Person](#schema_person)
-  * [Name](#schema_name)
-  * [Pages](#schema_pages)
-* [Extending the Schema](#extending)
-* [Serialized File Structure](#file_structure)
-* [Examples](#examples)
 
 ## <a name="introduction"/>Introduction
 
@@ -205,29 +197,29 @@ Additional objects will be added to the [core schema](#core) over time and any c
 
 A single [MIF object](#core) or an array of [MIF objects](#core) can be stored in a JSON file. Each top level object should contain a single field. The name of that field must be equal to the type of the object that it contains (in [camel case](#camel_case)). The value of that field is equal to the actual [MIF object](#core). For example, a file that contains a single [sample](#schema_sample) would appear as:
 
-```
+```json
 {
     "sample": {
-        "material": ...,
-        "measurement": ...
+        "material": {},
+        "measurement": {}
     }
 }
 ```
 
 Or similarly, a file that contains two sample [sample](#schema_sample) objects would be written as:
 
-```
+```json
 [
     {
         "sample": {
-            "material": ...,
-            "measurement": ...
+            "material": {},
+            "measurement": {}
         }
     },
     {
         "sample": {
-            "material": ...,
-            "measurement": ...
+            "material": {},
+            "measurement": {}
         }
     }
 ]
@@ -239,7 +231,7 @@ Or similarly, a file that contains two sample [sample](#schema_sample) objects w
 
 This record simply stores the superconducting critical temperature of RbOs2O6 and gives two references: the journal publication for that work as well as the corresponding link to arXiv.
 
-```
+```json
 {
     "sample": {
         "material": {
@@ -274,7 +266,7 @@ This record simply stores the superconducting critical temperature of RbOs2O6 an
 
 This record stores the band gap of single crystalline LiF as 13.6 eV. Additionally, it saves the DOI of the reference from which this value was extracted, that the measurement method was reflection, and that the gap is a direct transition measured at 300 K.
 
-```
+```json
 {
     "sample": {
         "material": {
@@ -337,7 +329,7 @@ This record stores the band gap of single crystalline LiF as 13.6 eV. Additional
 
 This record stores several properties of polycrystalline CaMnO3 in space group 62, which has been prepared with a solid state reaction. It saves the electrical resistivity at 300 K as 50 ohm-cm, the Seebeck coefficient at 300 K as -462.97 uV/K, the power factor at 300 K as 4.2868E-07 W/m-K^2, and the electrical conductivity at 300 K as 2.0000E-02 S/cm. All values were extracted from the paper with doi 10.1021/cm400893e, which in turn referenced those values from the work at url http://www.jmst.org/EN/Y2009/V25/I04/0535.
 
-```
+```json
 {
     "sample": {
         "material": {
