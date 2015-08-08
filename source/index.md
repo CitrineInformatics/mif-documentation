@@ -187,8 +187,6 @@ Additional objects will be added to the [core schema](#core) over time and any c
 
 # <a name="file_structure">File Structure</a>
 
-A single [MIF object](#core) or an array of [MIF objects](#core) can be stored in a JSON file. Each top level object should contain a single field. The name of that field must be equal to the type of the object that it contains (in [camel case](#camel_case)). The value of that field is equal to the actual [MIF object](#core). For example, a file that contains a single [sample](#schema_sample) would appear as:
-
 ```json
 {
     "sample": {
@@ -198,9 +196,9 @@ A single [MIF object](#core) or an array of [MIF objects](#core) can be stored i
 }
 ```
 
-<div></div>
+A single [MIF object](#core) or an array of [MIF objects](#core) can be stored in a JSON file. Each top level object should contain a single field. The name of that field must be equal to the type of the object that it contains (in [camel case](#camel_case)). The value of that field is equal to the actual [MIF object](#core). For example, a file that contains a single [sample](#schema_sample) would appear as:
 
-Or similarly, a file that contains two sample [sample](#schema_sample) objects would be written as:
+<div></div>
 
 ```json
 [
@@ -219,11 +217,11 @@ Or similarly, a file that contains two sample [sample](#schema_sample) objects w
 ]
 ```
 
+Or similarly, a file that contains two [sample](#schema_sample) objects would be written as:
+
 # <a name="examples">Examples</a>
 
 ## Superconducting Critical Temperature of RbOs2O6
-
-This record simply stores the superconducting critical temperature of RbOs2O6 and gives two references: the journal publication for that work as well as the corresponding link to arXiv.
 
 ```json
 {
@@ -256,9 +254,9 @@ This record simply stores the superconducting critical temperature of RbOs2O6 an
 }
 ```
 
-## Band Gap of LiF
+This record simply stores the superconducting critical temperature of RbOs2O6 and gives two references: the journal publication for that work as well as the corresponding link to arXiv.
 
-This record stores the band gap of single crystalline LiF as 13.6 eV. Additionally, it saves the DOI of the reference from which this value was extracted, that the measurement method was reflection, and that the gap is a direct transition measured at 300 K.
+## Band Gap of LiF
 
 ```json
 {
@@ -319,9 +317,9 @@ This record stores the band gap of single crystalline LiF as 13.6 eV. Additional
 }
 ```
 
-## Properties of CaMnO3 Relevant to Thermoelectric Performance
+This record stores the band gap of single crystalline LiF as 13.6 eV. Additionally, it saves the DOI of the reference from which this value was extracted, that the measurement method was reflection, and that the gap is a direct transition measured at 300 K.
 
-This record stores several properties of polycrystalline CaMnO3 in space group 62, which has been prepared with a solid state reaction. It saves the electrical resistivity at 300 K as 50 ohm-cm, the Seebeck coefficient at 300 K as -462.97 uV/K, the power factor at 300 K as 4.2868E-07 W/m-K^2, and the electrical conductivity at 300 K as 2.0000E-02 S/cm. All values were extracted from the paper with doi 10.1021/cm400893e, which in turn referenced those values from the work at url http://www.jmst.org/EN/Y2009/V25/I04/0535.
+## Properties of CaMnO3 Relevant to Thermoelectric Performance
 
 ```json
 {
@@ -462,3 +460,5 @@ This record stores several properties of polycrystalline CaMnO3 in space group 6
     }
 }
 ```
+
+This record stores several properties of polycrystalline CaMnO3 in space group 62, which has been prepared with a solid state reaction. It saves the electrical resistivity at 300 K as 50 ohm-cm, the Seebeck coefficient at 300 K as -462.97 uV/K, the power factor at 300 K as 4.2868E-07 W/m-K^2, and the electrical conductivity at 300 K as 2.0000E-02 S/cm. All values were extracted from the paper with doi 10.1021/cm400893e, which in turn referenced those values from the work at url http://www.jmst.org/EN/Y2009/V25/I04/0535.
