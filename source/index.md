@@ -1,9 +1,6 @@
 ---
 title: MIF Reference
 
-language_tabs:
-  - python
-
 toc_footers:
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
