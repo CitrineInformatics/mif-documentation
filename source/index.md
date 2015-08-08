@@ -198,7 +198,7 @@ A single [MIF object](#core) or an array of [MIF objects](#core) can be stored i
 }
 ```
 
-####
+<div></div>
 
 Or similarly, a file that contains two sample [sample](#schema_sample) objects would be written as:
 
