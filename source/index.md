@@ -1,5 +1,5 @@
 ---
-title: MIF Reference
+title: MIF Schema
 
 toc_footers:
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
@@ -9,7 +9,7 @@ search: true
 
 # <a name="introduction">Introduction</a>
 
-The MIF is a schema that is used to impose structure on materials data, facilitating its processing and transfer. It is designed to be flexible in order to represent the often complex data that is associated with materials research, development, and manufacturing.
+The Materials Information File (MIF) is a schema that is used to impose structure on materials data, facilitating its processing and transfer. It is designed to be flexible in order to represent the often complex data that is associated with materials research, development, and manufacturing.
 
 Besides those that are listed in this document, objects will continue to be added to the core of the MIF schema. Additionally, users can add data as they see fit as [secondary objects](#extending), which could be promoted to the core schema in the future. The schema should be used as a basis for structuring materials data, with users adding to it as needed.
 
@@ -196,7 +196,7 @@ Additional objects will be added to the [core schema](#core) over time and any c
 }
 ```
 
-A single [MIF object](#core) or an array of [MIF objects](#core) can be stored in a JSON file. Each top level object should contain a single field. The name of that field must be equal to the type of the object that it contains (in [camel case](#camel_case)). The value of that field is equal to the actual [MIF object](#core). For example, a file that contains a single [sample](#schema_sample) would appear as:
+A single [MIF object](#core) or an array of [MIF objects](#core) can be stored in a JSON file. Each top level object should contain a single field; the name of that field must be the type of the object that it contains (in [camel case](#camel_case)) and the value of that field set to the actual [MIF object](#core). For example, a file that contains a single [sample](#schema_sample) would appear as:
 
 <div></div>
 
