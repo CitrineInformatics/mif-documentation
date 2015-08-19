@@ -30,7 +30,7 @@ Sample objects are high-level structures used to store information about measure
 field name | nullable | value type | description
 -----------|----------|------------|------------
 material | false | single [material](#schema_material) object | A description of the material.
-measurement | false | array of [measurement](#schema_measurement) objects | Information about any measurements that were taken on the sample.
+measurement | true | array of [measurement](#schema_measurement) objects | Information about any measurements that were taken on the sample.
 reference | true | array of [reference](#schema_reference) objects | Any references where information about the sample is published. If any references are specific to a single measurement, then they should be attached to the corresponding object in the *measurement* field.
 contact | true | array of [person](#schema_person) objects | Any people that can be contacted for information about the sample. If one or more people should be contacted only for a particular measurement, then they should be attached to the corresponding object in the *measurement* field.
 license | true | array of strings | Information about any licenses that apply to the entire sample. If any license applies only to a particular measurement, then it should be attached to the corresponding object in the *measurement* field.
