@@ -41,7 +41,7 @@ System objects are high-level objects used to store information about a system o
 
 field name | nullable | value type | description
 -----------|----------|------------|------------
-sample | false | array of [sample](#schema_sample) objects | List of the individual samples that make up the system. The order of the samples may be meaningful; for example, when describing a multi-layer solar cell, the sample order should correspond their order in the physical device.
+sample | false | array of [sample](#schema_sample) objects | List of the individual samples that make up the system. The order of the samples may be meaningful; for example, when describing a multi-layer solar cell, the sample order should correspond to their order in the physical device.
 condition | true | Array of [value](#schema_value) objects | Information about conditions of the system as a whole. For example, this could describe methods used to join samples in a multi-layered device.
 measurement | true | Array of [measurement](#schema_measurement) objects | Information about any measurements that were taken on the system.
 reference | true | array of [reference](#schema_reference) objects | Any references where information about the system is published. If any references are specific to a single phase or measurement, then they should be attached to the corresponding object in the *phase* or *measurement* fields.
