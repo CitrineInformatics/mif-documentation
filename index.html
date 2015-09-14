@@ -232,12 +232,54 @@
 <td>The common name of the material.</td>
 </tr>
 <tr>
+<td>composition</td>
+<td>true</td>
+<td>array of <a href="#schema_composition">composition</a> objects</td>
+<td>Elements and the atomic/weight percent of each in the material.</td>
+</tr>
+<tr>
 <td>condition</td>
 <td>false</td>
 <td>array of <a href="#schema_value">value</a> objects</td>
 <td>Conditions of the material such as its crystallinity, morphology, purity, etc. Note that external conditions generally do not belong in this field, but are more appropriately placed inside, for example, the <em>condition</em> field of a <a href="#schema_measurement">measurement</a> object.</td>
 </tr>
 </tbody></table>
+
+<p>* While <em>chemicalFormula</em>, <em>commonName</em>, and <em>composition</em> are all nullable, at least one must be non-null.</p>
+
+<h2 id="a-name-schema_composition-a"><a name="schema_composition">Composition</a></h2>
+
+<p>Composition objects contain information about the amount of a single element in a material.</p>
+
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>element</td>
+<td>false</td>
+<td>string</td>
+<td>The symbol of the element.</td>
+</tr>
+<tr>
+<td>weightPercent</td>
+<td>true</td>
+<td>string</td>
+<td>The percentage of the weight of the material that is this element.</td>
+</tr>
+<tr>
+<td>atomicPercent</td>
+<td>true</td>
+<td>string</td>
+<td>The percentage of the atoms in the material that are this element.</td>
+</tr>
+</tbody></table>
+
+<p>* While <em>weightPercent</em> and <em>atomicPercent</em> are both nullable, at least one must be non-null.</p>
 
 <h2 id="a-name-schema_measurement-a"><a name="schema_measurement">Measurement</a></h2>
 
