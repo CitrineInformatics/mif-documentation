@@ -71,7 +71,22 @@ field name | nullable | value type | description
 -----------|----------|------------|------------
 chemicalFormula | true | string | The chemical formula of the material using IUPAC standards.
 commonName | true | string | The common name of the material.
+composition | true | array of [composition](#schema_composition) objects | Elements and the atomic/weight percent of each in the material.
 condition | false | array of [value](#schema_value) objects | Conditions of the material such as its crystallinity, morphology, purity, etc. Note that external conditions generally do not belong in this field, but are more appropriately placed inside, for example, the *condition* field of a [measurement](#schema_measurement) object.
+
+\* While *chemicalFormula*, *commonName*, and *composition* are all nullable, at least one must be non-null.
+
+## <a name="schema_composition">Composition</a>
+
+Composition objects contain information about the amount of a single element in a material.
+
+field name | nullable | value type | description
+-----------|----------|------------|------------
+element | false | string | The symbol of the element.
+weightPercent | true | string | The percentage of the weight of the material that is this element.
+atomicPercent | true | string | The percentage of the atoms in the material that are this element.
+
+\* While *weightPercent* and *atomicPercent* are both nullable, at least one must be non-null.
 
 ## <a name="schema_measurement">Measurement</a>
 
