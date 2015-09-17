@@ -70,7 +70,7 @@ Material objects store information about the chemical composition of a material 
 field name | nullable | value type | description
 -----------|----------|------------|------------
 chemicalFormula | true | string | The chemical formula of the material using IUPAC standards.
-commonName | true | string | The common name of the material.
+commonName | true | array of strings | List of the common name of the material.
 composition | true | array of [composition](#schema_composition) objects | Elements and the atomic/weight percent of each in the material.
 condition | false | array of [value](#schema_value) objects | Conditions of the material such as its crystallinity, morphology, purity, etc. Note that external conditions generally do not belong in this field, but are more appropriately placed inside, for example, the *condition* field of a [measurement](#schema_measurement) object.
 
