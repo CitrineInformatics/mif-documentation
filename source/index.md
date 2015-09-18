@@ -55,7 +55,7 @@ Component objects are used inside of [system](#schema_system) objects to store a
 
 field name | nullable | value type | description
 -----------|----------|------------|------------
-label | false | string | Label to apply to the component. For example, in a system containing a thin film grown on a substrate, this might be equal to "substrate".
+label | true | string | Label to apply to the component. For example, in a system containing a thin film grown on a substrate, this might be equal to "substrate".
 sample | false | [sample](#schema_sample) object | Information about the particular sample that makes up this component.
 
 ## <a name="schema_phase_diagram">Phase Diagram</a>
