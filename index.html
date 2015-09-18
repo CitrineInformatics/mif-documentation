@@ -108,10 +108,10 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>sample</td>
+<td>component</td>
 <td>false</td>
-<td>array of <a href="#schema_sample">sample</a> objects</td>
-<td>List of the individual samples that make up the system. The order of the samples may be meaningful; for example, when describing a multi-layer solar cell, the sample order should correspond to their order in the physical device.</td>
+<td>array of <a href="#schema_component">component</a> objects</td>
+<td>List of the individual components that make up the system. The order of the components may be meaningful; for example, when describing a multi-layer solar cell, the sample order should correspond to their order in the physical device.</td>
 </tr>
 <tr>
 <td>condition</td>
@@ -142,6 +142,32 @@
 <td>true</td>
 <td>array of strings</td>
 <td>Information about any licenses that apply to the entire system. If any license applies only to a particular sample or measurement, then it should be attached to the corresponding object in the <em>sample</em> or <em>measurement</em> fields.</td>
+</tr>
+</tbody></table>
+
+<h2 id="a-name-schema_component-a"><a name="schema_component">Component</a></h2>
+
+<p>Component objects are used inside of <a href="#schema_system">system</a> objects to store a system component of the system.</p>
+
+<table><thead>
+<tr>
+<th>field name</th>
+<th>nullable</th>
+<th>value type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>label</td>
+<td>false</td>
+<td>string</td>
+<td>Label to apply to the component. For example, in a system containing a thin film grown on a substrate, this might be equal to &ldquo;substrate&rdquo;.</td>
+</tr>
+<tr>
+<td>sample</td>
+<td>false</td>
+<td><a href="#schema_sample">sample</a> object</td>
+<td>Information about the particular sample that makes up this component.</td>
 </tr>
 </tbody></table>
 
