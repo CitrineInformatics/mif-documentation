@@ -45,9 +45,9 @@ systemType | true | string | Type of the system. For example, "Ionic liquid" or 
 component | false | array of [component](#schema_component) objects | List of the individual components that make up the system. The order of the components may be meaningful; for example, when describing a multi-layer solar cell, the sample order should correspond to their order in the physical device.
 condition | true | array of [value](#schema_value) objects | Information about conditions of the system as a whole. For example, this could describe methods used to join samples in a multi-layered device.
 measurement | true | array of [measurement](#schema_measurement) objects | Information about any measurements that were taken on the system.
-reference | true | array of [reference](#schema_reference) objects | Any references where information about the system is published. If any references are specific to a single phase or measurement, then they should be attached to the corresponding object in the *phase* or *measurement* fields.
-contact | true | array of [person](#schema_person) objects | Any people that can be contacted for information about the system. If one or more people should be contacted only for a particular sample or measurement, then they should be attached to the corresponding object in the *sample* or *measurement* fields.
-license | true | array of strings | Information about any licenses that apply to the entire system. If any license applies only to a particular sample or measurement, then it should be attached to the corresponding object in the *sample* or *measurement* fields.
+reference | true | array of [reference](#schema_reference) objects | Any references where information about the system is published. If any references are specific to a single component or measurement, then they should be attached to the corresponding object in the *component* or *measurement* fields.
+contact | true | array of [person](#schema_person) objects | Any people that can be contacted for information about the system. If one or more people should be contacted only for a particular component or measurement, then they should be attached to the corresponding object in the *component* or *measurement* fields.
+license | true | array of strings | Information about any licenses that apply to the entire system. If any license applies only to a particular component or measurement, then it should be attached to the corresponding object in the *component* or *measurement* fields.
 
 ## <a name="schema_component">Component</a>
 
