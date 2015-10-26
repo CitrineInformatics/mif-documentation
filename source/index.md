@@ -41,12 +41,22 @@ System objects are high-level objects used to store information about a system o
 
 field name | nullable | value type | description
 -----------|----------|------------|------------
-sample | false | array of [sample](#schema_sample) objects | List of the individual samples that make up the system. The order of the samples may be meaningful; for example, when describing a multi-layer solar cell, the sample order should correspond to their order in the physical device.
-condition | true | Array of [value](#schema_value) objects | Information about conditions of the system as a whole. For example, this could describe methods used to join samples in a multi-layered device.
-measurement | true | Array of [measurement](#schema_measurement) objects | Information about any measurements that were taken on the system.
-reference | true | array of [reference](#schema_reference) objects | Any references where information about the system is published. If any references are specific to a single phase or measurement, then they should be attached to the corresponding object in the *phase* or *measurement* fields.
-contact | true | array of [person](#schema_person) objects | Any people that can be contacted for information about the system. If one or more people should be contacted only for a particular sample or measurement, then they should be attached to the corresponding object in the *sample* or *measurement* fields.
-license | true | array of strings | Information about any licenses that apply to the entire system. If any license applies only to a particular sample or measurement, then it should be attached to the corresponding object in the *sample* or *measurement* fields.
+systemType | true | string | Type of the system. For example, "Ionic liquid" or "Multi-layer solar cell".
+component | false | array of [component](#schema_component) objects | List of the individual components that make up the system. The order of the components may be meaningful; for example, when describing a multi-layer solar cell, the sample order should correspond to their order in the physical device.
+condition | true | array of [value](#schema_value) objects | Information about conditions of the system as a whole. For example, this could describe methods used to join samples in a multi-layered device.
+measurement | true | array of [measurement](#schema_measurement) objects | Information about any measurements that were taken on the system.
+reference | true | array of [reference](#schema_reference) objects | Any references where information about the system is published. If any references are specific to a single component or measurement, then they should be attached to the corresponding object in the *component* or *measurement* fields.
+contact | true | array of [person](#schema_person) objects | Any people that can be contacted for information about the system. If one or more people should be contacted only for a particular component or measurement, then they should be attached to the corresponding object in the *component* or *measurement* fields.
+license | true | array of strings | Information about any licenses that apply to the entire system. If any license applies only to a particular component or measurement, then it should be attached to the corresponding object in the *component* or *measurement* fields.
+
+## <a name="schema_component">Component</a>
+
+Component objects are used inside of [system](#schema_system) objects to store a system component of the system.
+
+field name | nullable | value type | description
+-----------|----------|------------|------------
+label | true | string | Label to apply to the component. For example, in a system containing a thin film grown on a substrate, this might be equal to "substrate".
+sample | false | [sample](#schema_sample) object | Information about the particular sample that makes up this component.
 
 ## <a name="schema_phase_diagram">Phase Diagram</a>
 
@@ -70,7 +80,7 @@ Material objects store information about the chemical composition of a material 
 field name | nullable | value type | description
 -----------|----------|------------|------------
 chemicalFormula | true | string | The chemical formula of the material using IUPAC standards.
-commonName | true | string | The common name of the material.
+commonName | true | array of strings | List of the common names of the material.
 composition | true | array of [composition](#schema_composition) objects | Elements and the atomic/weight percent of each in the material.
 id | true | array of [id](#schema_id) objects | One or more ids that identify a material such as a CAS number.
 condition | false | array of [value](#schema_value) objects | Conditions of the material such as its crystallinity, morphology, purity, etc. Note that external conditions generally do not belong in this field, but are more appropriately placed inside, for example, the *condition* field of a [measurement](#schema_measurement) object.
