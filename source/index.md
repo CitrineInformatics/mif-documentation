@@ -83,7 +83,7 @@ chemicalFormula | true | string | The chemical formula of the material using IUP
 commonName | true | array of strings | List of the common names of the material.
 composition | true | array of [composition](#schema_composition) objects | Elements and the atomic/weight percent of each in the material.
 id | true | array of [id](#schema_id) objects | One or more ids that identify a material such as a CAS number.
-cif | true | String with the content of a [CIF](http://www.iucr.org/resources/cif) file that describes the material.
+cif | true | String | Content of a [CIF](http://www.iucr.org/resources/cif) file that describes the material.
 condition | true | array of [value](#schema_value) objects | Conditions of the material such as its crystallinity, morphology, purity, etc. Note that external conditions generally do not belong in this field, but are more appropriately placed inside, for example, the *condition* field of a [measurement](#schema_measurement) object.
 
 \* While *chemicalFormula*, *commonName*, *composition*, *id*, and *cif* are all nullable, at least one must be non-null.
