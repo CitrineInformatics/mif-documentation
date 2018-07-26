@@ -17,11 +17,11 @@
     <a href="#" id="nav-button">
       <span>
         NAV
-        <img src="images/navbar.png" />
+        <img src="images/navbar.png" alt="Navbar" />
       </span>
     </a>
     <div class="tocify-wrapper">
-      <img src="images/logo.png" />
+      <img src="images/logo.png" alt="Logo" />
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
         </div>
@@ -35,23 +35,29 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="a-name-introduction-a"><a name="introduction">Introduction</a></h1>
+        <h1 id="deprecation-notice"><a name="introduction">Deprecation notice</a></h1>
+
+<p>Citrine has deprecated the MIF in favour of the
+<a href="http://citrineinformatics.github.io/pif-documentation/">PIF</a>, for which a rich
+API, and SDKs are available.</p>
+
+<h1 id="introduction"><a name="introduction">Introduction</a></h1>
 
 <p>The Materials Information File (MIF) is a schema that is used to impose structure on materials data, facilitating its processing and transfer. It is designed to be flexible in order to represent the often complex data that is associated with materials research, development, and manufacturing.</p>
 
 <p>Besides those that are listed in this document, objects will continue to be added to the core of the MIF schema. Additionally, users can add data as they see fit as <a href="#extending">secondary objects</a>, which could be promoted to the core schema in the future. The schema should be used as a basis for structuring materials data, with users adding to it as needed.</p>
 
-<h1 id="a-name-json-a"><a name="json">Adherence to JSON Standards</a></h1>
+<h1 id="adherence-to-json-standards"><a name="json">Adherence to JSON Standards</a></h1>
 
 <p>MIF&rsquo;s must always be compliant with JSON standards.</p>
 
 <p>Particular to the MIF schema, all field names must be in <a name="camel_case"> camel case</a>: no spaces between words; all letters are lowercase, except the first letter of each word, which is uppercase; the first letter of the name is also lowercase. For example, the name &ldquo;phase diagram&rdquo; would be written as &ldquo;phaseDiagram&rdquo;. Do not use underscores, hyphens, or other non-alphanumeric characters in field names.</p>
 
-<h1 id="a-name-core-a"><a name="core">The Core Schema</a></h1>
+<h1 id="the-core-schema"><a name="core">The Core Schema</a></h1>
 
 <p>This section contains the list of MIF objects that are part of the core schema. Each section contains a list of all of the fields that are a part of that object and information about what it contains.</p>
 
-<h2 id="a-name-schema_sample-a"><a name="schema_sample">Sample</a></h2>
+<h2 id="sample"><a name="schema_sample">Sample</a></h2>
 
 <p>Sample objects are high-level structures used to store information about measurements that were made on a material.</p>
 
@@ -95,7 +101,7 @@
 </tr>
 </tbody></table>
 
-<h2 id="a-name-schema_system-a"><a name="schema_system">System</a></h2>
+<h2 id="system"><a name="schema_system">System</a></h2>
 
 <p>System objects are high-level objects used to store information about a system of materials and the properties of those materials.</p>
 
@@ -151,7 +157,7 @@
 </tr>
 </tbody></table>
 
-<h2 id="a-name-schema_component-a"><a name="schema_component">Component</a></h2>
+<h2 id="component"><a name="schema_component">Component</a></h2>
 
 <p>Component objects are used inside of <a href="#schema_system">system</a> objects to store a system component of the system.</p>
 
@@ -177,7 +183,7 @@
 </tr>
 </tbody></table>
 
-<h2 id="a-name-schema_phase_diagram-a"><a name="schema_phase_diagram">Phase Diagram</a></h2>
+<h2 id="phase-diagram"><a name="schema_phase_diagram">Phase Diagram</a></h2>
 
 <p>Phase diagram objects are high-level objects used to store information about a phase diagram and the materials that it describes.</p>
 
@@ -239,7 +245,7 @@
 </tr>
 </tbody></table>
 
-<h2 id="a-name-schema_material-a"><a name="schema_material">Material</a></h2>
+<h2 id="material"><a name="schema_material">Material</a></h2>
 
 <p>Material objects store information about the chemical composition of a material and its conditions.</p>
 
@@ -291,7 +297,7 @@
 
 <p>* While <em>chemicalFormula</em>, <em>commonName</em>, <em>composition</em>, <em>id</em>, and <em>cif</em> are all nullable, at least one must be non-null.</p>
 
-<h2 id="a-name-schema_composition-a"><a name="schema_composition">Composition</a></h2>
+<h2 id="composition"><a name="schema_composition">Composition</a></h2>
 
 <p>Composition objects contain information about the amount of a single element in a material.</p>
 
@@ -325,7 +331,7 @@
 
 <p>* While <em>weightPercent</em> and <em>atomicPercent</em> are both nullable, at least one must be non-null.</p>
 
-<h2 id="name-schema_id-a"><name ="schema_id">Id</a></h2>
+<h2 id="id"><name ="schema_id">Id</a></h2>
 
 <p>Ids are simple objects that store the name and value of some identifier.</p>
 
@@ -351,7 +357,7 @@
 </tr>
 </tbody></table>
 
-<h2 id="a-name-schema_measurement-a"><a name="schema_measurement">Measurement</a></h2>
+<h2 id="measurement"><a name="schema_measurement">Measurement</a></h2>
 
 <p>Measurement objects contain information about a measurement of a sample and the external conditions that were applied.</p>
 
@@ -407,7 +413,7 @@
 </tr>
 </tbody></table>
 
-<h2 id="a-name-schema_value-a"><a name="schema_value">Value</a></h2>
+<h2 id="value"><a name="schema_value">Value</a></h2>
 
 <p>Object to store information about a single value, which can be a scalar, vector, or matrix.</p>
 
@@ -453,7 +459,7 @@
 
 <p>* While <em>scalar</em>, <em>vector</em>, and <em>matrix</em> are all nullable, exactly one must be non-null.</p>
 
-<h2 id="a-name-schema_scalar-a"><a name="schema_scalar">Scalar</a></h2>
+<h2 id="scalar"><a name="schema_scalar">Scalar</a></h2>
 
 <p>Object to store information about a single scalar value. This field can represent a simple scalar value (&ldquo;3.4&rdquo;), a scalar with an uncertainty (&ldquo;3.4&rdquo; +- &ldquo;0.1&rdquo;), a minimum (&gt;= &ldquo;3.4&rdquo;), a maximum (&lt;= &ldquo;3.4&rdquo;), or a range (&ldquo;2.7&rdquo; - &ldquo;4.1&rdquo;) using combinations of the available fields.</p>
 
@@ -493,7 +499,7 @@
 
 <p>* While all fields are nullable, at least one of <em>value</em>, <em>minimum</em>, and/or <em>maximum</em> must be non-null.</p>
 
-<h2 id="a-name-schema_phase-a"><a name="schema_phase">Phase</a></h2>
+<h2 id="phase"><a name="schema_phase">Phase</a></h2>
 
 <p>Object to store detailed information about a phase in a phase diagram.</p>
 
@@ -519,7 +525,7 @@
 </tr>
 </tbody></table>
 
-<h2 id="name-schema_point-a"><name="schema_point">Point</a></h2>
+<h2 id="point"><name="schema_point">Point</a></h2>
 
 <p>Object to store a point in a plot or a label in a phase diagram.</p>
 
@@ -545,7 +551,7 @@
 </tr>
 </tbody></table>
 
-<h2 id="name-schema_line-a"><name="schema_line">Line</a></h2>
+<h2 id="line"><name="schema_line">Line</a></h2>
 
 <p>Object to store a line on a plot or a boundary in a phase diagram.</p>
 
@@ -571,7 +577,7 @@
 </tr>
 </tbody></table>
 
-<h2 id="a-name-schema_reference-a"><a name="schema_reference">Reference</a></h2>
+<h2 id="reference"><a name="schema_reference">Reference</a></h2>
 
 <p>Object to store information about a referenced work.</p>
 
@@ -669,7 +675,7 @@
 </tr>
 </tbody></table>
 
-<h2 id="a-name-schema_person-a"><a name="schema_person">Person</a></h2>
+<h2 id="person"><a name="schema_person">Person</a></h2>
 
 <p>Object to store information about a person and their contact information.</p>
 
@@ -703,7 +709,7 @@
 
 <p>* While all fields are nullable, at least one must be non-null.</p>
 
-<h2 id="a-name-schema_name-a"><a name="schema_name">Name</a></h2>
+<h2 id="name"><a name="schema_name">Name</a></h2>
 
 <p>Object to store the given and family name of a person.</p>
 
@@ -729,7 +735,7 @@
 </tr>
 </tbody></table>
 
-<h2 id="a-name-schema_pages-a"><a name="schema_pages">Pages</a></h2>
+<h2 id="pages"><a name="schema_pages">Pages</a></h2>
 
 <p>Object to store the start and end pages of a reference.</p>
 
@@ -755,13 +761,13 @@
 </tr>
 </tbody></table>
 
-<h1 id="a-name-extending-a"><a name="extending">Extending the Schema</a></h1>
+<h1 id="extending-the-schema"><a name="extending">Extending the Schema</a></h1>
 
 <p>All effort should be made to adhere to the <a href="#core">core schema</a>. However, in some cases, it may not be possible to structure some data in this way. Therefore, additional elements may be added by the user where needed as long as they are valid JSON.</p>
 
 <p>Additional objects will be added to the <a href="#core">core schema</a> over time and any commonly used extensions of the schema will be considered for promotion.</p>
 
-<h1 id="a-name-file_structure-a"><a name="file_structure">File Structure</a></h1>
+<h1 id="file-structure"><a name="file_structure">File Structure</a></h1>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"sample"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"material"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
@@ -791,7 +797,7 @@
 
 <p>Or similarly, a file that contains two <a href="#schema_sample">sample</a> objects would be written as:</p>
 
-<h1 id="a-name-examples-a"><a name="examples">Examples</a></h1>
+<h1 id="examples"><a name="examples">Examples</a></h1>
 
 <h2 id="superconducting-critical-temperature-of-rbos2o6">Superconducting Critical Temperature of RbOs2O6</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
