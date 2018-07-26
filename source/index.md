@@ -7,6 +7,12 @@ toc_footers:
 search: true
 ---
 
+# <a name="introduction">Deprecation notice</a>
+
+Citrine has deprecated the MIF in favour of the
+[PIF](http://citrineinformatics.github.io/pif-documentation/), for which a rich
+API, and SDKs are available.
+
 # <a name="introduction">Introduction</a>
 
 The Materials Information File (MIF) is a schema that is used to impose structure on materials data, facilitating its processing and transfer. It is designed to be flexible in order to represent the often complex data that is associated with materials research, development, and manufacturing.
